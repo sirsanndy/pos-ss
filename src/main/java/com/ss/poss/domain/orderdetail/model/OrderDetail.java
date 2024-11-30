@@ -2,6 +2,7 @@ package com.ss.poss.domain.orderdetail.model;
 
 import com.ss.poss.domain.menu.model.Menu;
 import com.ss.poss.domain.order.model.Order;
+import com.ss.poss.domain.order.model.OrderStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,7 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetail {
-    private UUID id;
+    private UUID orderDetailId;
+
     private Order order;
     private Menu menu;
     private Integer quantity;
