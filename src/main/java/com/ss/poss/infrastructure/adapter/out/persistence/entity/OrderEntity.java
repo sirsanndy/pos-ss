@@ -29,7 +29,7 @@ public class OrderEntity extends BaseEntity {
 
     @Column(name = "ORDER_STATUS")
     @Enumerated()
-    private OrderStatus status;
+    private OrderStatus orderStatus;
 
     @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "ORDER_ID")
