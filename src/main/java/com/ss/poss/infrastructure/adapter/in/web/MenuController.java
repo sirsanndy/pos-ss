@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,20 @@ public class MenuController {
         } catch (Exception e){
             LOG.error("ERROR WHEN GET LIST OF MENU REQUEST : {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/create-list")
+    public ResponseEntity<List<Menu>> createMenus(@RequestBody List<Menu> menus){
+        LOG.info("CREATE LIST MENU REQUEST : {} STARTED", menus.size());
+        try {
+            List<Menu> menuList = menuService.createMenus(menus);
+            return ResponseEntity.ok(menuList);
+        } catch (Exception e){
+            LOG.error("ERROR WHEN CREATE LIST OF MENU REQUEST : {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } finally {
+            LOG.info("CREATE LIST MENU REQUEST : {} FINISHED", menus.size());
         }
     }
 }
