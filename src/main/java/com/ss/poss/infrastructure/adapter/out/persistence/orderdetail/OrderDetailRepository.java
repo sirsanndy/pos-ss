@@ -4,8 +4,14 @@ import com.ss.poss.infrastructure.adapter.out.persistence.entity.OrderDetailEnti
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, UUID> {
+    @Override
+    Optional<OrderDetailEntity> findById(UUID uuid);
+
+    List<OrderDetailEntity> findByOrder_OrderId(UUID orderId);
 }
