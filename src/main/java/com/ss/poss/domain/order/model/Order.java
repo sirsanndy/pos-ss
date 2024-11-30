@@ -1,6 +1,6 @@
 package com.ss.poss.domain.order.model;
 
-import com.ss.poss.domain.menu.model.Menu;
+import com.ss.poss.domain.orderdetail.model.OrderDetail;
 import lombok.*;
 
 import java.io.Serial;
@@ -21,5 +21,5 @@ public class Order implements Serializable {
     private UUID orderId;
     private OrderStatus orderStatus;
     private BigDecimal totalPrice;
-    private Collection<Menu> listItem;
+    private Collection<OrderDetail> listItem;
 }
