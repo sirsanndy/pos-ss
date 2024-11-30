@@ -6,7 +6,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -21,5 +21,5 @@ public class Order implements Serializable {
     private UUID orderId;
     private OrderStatus orderStatus;
     private BigDecimal totalPrice;
-    private Collection<OrderDetail> listItem;
+    private List<OrderDetail> listItem;
 }
