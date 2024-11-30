@@ -30,8 +30,8 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Order> create(@RequestBody Order order){
+    @PostMapping("/submit")
+    public ResponseEntity<Order> submit(@RequestBody Order order){
         try {
             order = orderService.createOrder(order);
             return ResponseEntity.ok(order);
