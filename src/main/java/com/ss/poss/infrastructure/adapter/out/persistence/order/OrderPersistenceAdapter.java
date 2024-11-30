@@ -30,7 +30,7 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
         LOG.info("SAVE ORDER IN PERSISTENCE LAYER TO DB STARTED");
         OrderEntity orderEntity = orderMapper.toEntity(order);
         orderRepository.save(orderEntity);
-        order.setId(orderEntity.getOrderId());
+        order.setOrderId(orderEntity.getOrderId());
         LOG.info("SAVE ORDER IN PERSISTENCE LAYER TO DB FINISHED");
         return order;
     }
