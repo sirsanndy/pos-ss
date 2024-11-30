@@ -30,7 +30,7 @@ public class OrderDetailPersistenceAdapter implements OrderDetailOutputPort {
         LOG.info("SAVE ORDER DETAIL IN PERSISTENCE LAYER TO DB STARTED");
         OrderDetailEntity orderDetailEntity = orderDetailMapper.toEntity(orderDetail);
         orderDetailRepository.save(orderDetailEntity);
-        orderDetail.setId(orderDetailEntity.getOrderDetailId());
+        orderDetail.setOrderDetailId(orderDetailEntity.getOrderDetailId());
         LOG.info("SAVE ORDER DETAIL IN PERSISTENCE LAYER TO DB FINISHED");
         return orderDetail;
     }
