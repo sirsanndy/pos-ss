@@ -10,4 +10,5 @@ public interface OrderDetailOutputPort {
     OrderDetail saveOrderDetail(OrderDetail orderDetail);
     Optional<OrderDetail> getOrderDetailById(UUID id);
     List<OrderDetail> getOrderDetailByOrderId(UUID orderId);
+    List<OrderDetail> saveOrderDetails(List<OrderDetail> orderDetailList);
 }
