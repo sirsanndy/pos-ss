@@ -2,6 +2,7 @@ package com.ss.poss.domain.menu.model;
 
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -12,7 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Menu implements Serializable {
-    private UUID id;
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private UUID menuId;
     private String name;
     private String description;
     private Integer stock;
