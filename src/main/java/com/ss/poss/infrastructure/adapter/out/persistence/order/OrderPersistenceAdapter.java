@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Adapter
 public class OrderPersistenceAdapter implements OrderOutputPort {
@@ -59,11 +60,20 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
 
     @Override
     public Optional<Order> getOrderById(UUID orderId) {
-        LOG.info("GET MENU IN PERSISTENCE LAYER FROM DB");
+        LOG.info("GET ORDER IN PERSISTENCE LAYER FROM DB");
         OrderEntity orderEntity = orderRepository.findById(orderId).orElse(null);
         if(Objects.nonNull(orderEntity)){
             return Optional.of(orderMapper.toOrder(orderEntity));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        LOG.info("GET LIST ORDER IN PERSISTENCE LAYER FROM DB");
+        return orderRepository.findAll()
+                .stream()
+                .map(orderMapper::toOrder)
+                .collect(Collectors.toList());
     }
 }

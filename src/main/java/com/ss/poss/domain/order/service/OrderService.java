@@ -1,8 +1,6 @@
 package com.ss.poss.domain.order.service;
 
-import com.ss.poss.application.port.in.order.CreateOrderUseCase;
-import com.ss.poss.application.port.in.order.GetOrderUseCase;
-import com.ss.poss.application.port.in.order.WebhookOrderUserCase;
+import com.ss.poss.application.port.in.order.*;
 import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.model.OrderWebhook;
 import com.ss.poss.infrastructure.adapter.out.persistence.order.OrderPersistenceAdapter;
@@ -10,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
-public class OrderService implements CreateOrderUseCase, GetOrderUseCase, WebhookOrderUserCase {
+public class OrderService implements CreateOrderUseCase, GetOrderUseCase, WebhookOrderUserCase,
+        GetListOrderUseCase, DeleteOrderUseCase {
     private static final Logger LOG = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderPersistenceAdapter orderPersistenceAdapter;
@@ -38,5 +38,17 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
     @Override
     public void send(OrderWebhook orderWebhook) {
 
+    }
+
+    @Override
+    public void deleteOrder(Order order) {
+
+    }
+
+    @Override
+    public List<Order> getListOrder() {
+        LOG.info("Get list order service");
+        List<Order> orderList = orderPersistenceAdapter.getListOrder();
+        return orderList;
     }
 }

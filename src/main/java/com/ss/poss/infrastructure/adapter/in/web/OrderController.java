@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
@@ -27,6 +30,34 @@ public class OrderController {
         } catch (Exception e){
             LOG.error("ERROR WHEN GET ORDER WEBHOOK REQUEST : {}", e.getMessage());
             return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @PostMapping("/get/{orderId}")
+    public ResponseEntity<Order> submit(@PathVariable UUID orderId){
+        LOG.info("GET ORDER REQUEST : {} STARTED", orderId);
+        try {
+            Order order = orderService.getOrderById(orderId);
+            return ResponseEntity.ok(order);
+        } catch (Exception e){
+            LOG.error("ERROR WHEN GET ORDER REQUEST : {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
+        } finally {
+            LOG.info("GET ORDER REQUEST : {} FINISHED", orderId);
+        }
+    }
+
+    @GetMapping("/get-list")
+    public ResponseEntity<List<Order>> getListOrder(){
+        LOG.info("GET LIST ORDER REQUEST STARTED");
+        try {
+            List<Order> orderList = orderService.getListOrder();
+            return ResponseEntity.ok(orderList);
+        } catch (Exception e){
+            LOG.error("ERROR WHEN GET LIST ORDER REQUEST : {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
+        } finally {
+            LOG.info("GET LIST ORDER REQUEST FINISHED");
         }
     }
 
