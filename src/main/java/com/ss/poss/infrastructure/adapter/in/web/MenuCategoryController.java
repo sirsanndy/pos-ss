@@ -30,7 +30,7 @@ public class MenuCategoryController {
             List<MenuCategory> menuCategoryList = menuCategoryService.getListMenuCategory();
             return ResponseEntity.ok(menuCategoryList);
         } catch (Exception e){
-            LOG.error("GET LIST MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} "e.getMessage());
+            LOG.error("GET LIST MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             LOG.info("GET LIST MENU CATEGORY REQUEST IS FINISHED");
