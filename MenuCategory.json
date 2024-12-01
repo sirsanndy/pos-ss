@@ -1,0 +1,20 @@
+[
+  {
+    "menuCategoryId": "fe332714-a737-41b9-8340-9221e476ea49",
+    "menuCategoryName": "Makanan",
+    "menuCategoryDesc": "Makanan Nusantara",
+    "isActive": true
+  },
+  {
+    "menuCategoryId": "d2ff99f2-0587-4aeb-81a9-c9005bdd294e",
+    "menuCategoryName": "Minuman",
+    "menuCategoryDesc": "Minuman Pemuas Dahaga",
+    "isActive": true
+  },
+  {
+    "menuCategoryId": "0ff802cb-fc92-441e-b9d4-6806ab7c8e2d",
+    "menuCategoryName": "Cemilan",
+    "menuCategoryDesc": "Cemilan Daerah Majenang",
+    "isActive": true
+  }
+]
