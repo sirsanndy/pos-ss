@@ -10,8 +10,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface MenuRepository extends JpaRepository<MenuEntity, Long> {
+public interface MenuRepository extends JpaRepository<MenuEntity, UUID> {
+
+    @Override
+    Optional<MenuEntity> findById(UUID uuid);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<MenuEntity> findByMenuId(UUID menuId);
+    Optional<MenuEntity> findByMenuIdLocked(UUID menuId);
 }

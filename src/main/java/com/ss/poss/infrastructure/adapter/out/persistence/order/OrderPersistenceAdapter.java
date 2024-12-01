@@ -40,7 +40,7 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
         if(!CollectionUtils.isEmpty(order.getListItem())){
             OrderEntity orderEntity;
             if(order.getOrderId() != null) {
-                orderEntity = orderRepository.findByOrderId(order.getOrderId())
+                orderEntity = orderRepository.findById(order.getOrderId())
                         .orElseThrow(() -> new OrderNotFoundException(String.format("ORDER WITH ORDER ID %s IS NOT FOUND",
                                 order.getOrderId().toString())));
             } else {
@@ -60,7 +60,7 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
     @Override
     public Optional<Order> getOrderById(UUID orderId) {
         LOG.info("GET MENU IN PERSISTENCE LAYER FROM DB");
-        OrderEntity orderEntity = orderRepository.findByOrderId(orderId).orElse(null);
+        OrderEntity orderEntity = orderRepository.findById(orderId).orElse(null);
         if(Objects.nonNull(orderEntity)){
             return Optional.of(orderMapper.toOrder(orderEntity));
         }
