@@ -7,16 +7,17 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface MenuRepository extends JpaRepository<MenuEntity, UUID> {
-
-    @Override
     Optional<MenuEntity> findById(UUID uuid);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("from MenuEntity where menuId = ?1")
     Optional<MenuEntity> findByMenuIdLocked(UUID menuId);
+
+    List<MenuEntity> findAllOrderByCreatedAtDesc();
 }

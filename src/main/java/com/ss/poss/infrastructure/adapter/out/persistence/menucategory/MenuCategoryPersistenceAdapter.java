@@ -57,7 +57,7 @@ public class MenuCategoryPersistenceAdapter implements MenuCategoryOutputPort {
     @Override
     public List<MenuCategory> getMenuCategories() {
         LOG.info("Get all menu category: started");
-        List<MenuCategory> menuCategories = menuCategoryRepository.findAll()
+        List<MenuCategory> menuCategories = menuCategoryRepository.findAllOrderByCreatedAtDesc()
                 .stream()
                 .map(menuCategoryMapper::toMenuCategory)
                 .toList();

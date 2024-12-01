@@ -74,6 +74,6 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
     @Override
     public List<Menu> getMenuList() {
         LOG.info("GET LIST OF MENU IN PERSISTENCE LAYER FROM DB");
-        return menuRepository.findAll().stream().map(menuMapper::toMenu).toList();
+        return menuRepository.findAllOrderByCreatedAtDesc().stream().map(menuMapper::toMenu).toList();
     }
 }
