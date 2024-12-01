@@ -12,5 +12,7 @@ import org.mapstruct.Mapping;
 public interface MenuMapper {
     @Mapping (source = "menuCategoryId", target = "menuCategory")
     MenuEntity toEntity(Menu menu);
+
+    @Mapping(source = "menuCategory.menuCategoryId", target = "menuCategoryId")
     Menu toMenu(MenuEntity menuEntity);
 }
