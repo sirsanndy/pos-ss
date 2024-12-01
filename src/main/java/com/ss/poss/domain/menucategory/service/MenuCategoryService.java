@@ -47,7 +47,7 @@ public class MenuCategoryService implements CreateMenuCategoryUseCase, GetMenuCa
     }
 
     @Override
-    public MenuCategory getMenuCategory(UUID menuCategoryId) {
+    public MenuCategory getMenuCategoryById(UUID menuCategoryId) {
         LOG.info("Get menu category by id {} started", menuCategoryId);
         MenuCategory menuCategory = menuCategoryPersistenceAdapter.getMenuCategoryById(menuCategoryId);
         LOG.info("get menu category by id {} finished", menuCategoryId);
