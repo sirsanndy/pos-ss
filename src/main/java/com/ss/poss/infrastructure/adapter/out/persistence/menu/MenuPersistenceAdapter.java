@@ -3,12 +3,8 @@ package com.ss.poss.infrastructure.adapter.out.persistence.menu;
 import com.ss.poss.application.port.out.menu.MenuOutputPort;
 import com.ss.poss.domain.menu.mapper.MenuMapper;
 import com.ss.poss.domain.menu.model.Menu;
-import com.ss.poss.domain.menucategory.exception.MenuCategoryNotFoundException;
-import com.ss.poss.domain.menucategory.service.MenuCategoryService;
 import com.ss.poss.infrastructure.adapter.config.Adapter;
-import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuCategoryEntity;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuEntity;
-import com.ss.poss.infrastructure.adapter.out.persistence.menucategory.MenuCategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +21,10 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
 
     private final MenuRepository menuRepository;
     private final MenuMapper menuMapper;
-    private final MenuCategoryRepository menuCategoryRepository;
 
-    public MenuPersistenceAdapter(MenuRepository menuRepository, MenuMapper menuMapper, MenuCategoryRepository menuCategoryRepository) {
+    public MenuPersistenceAdapter(MenuRepository menuRepository, MenuMapper menuMapper) {
         this.menuRepository = menuRepository;
         this.menuMapper = menuMapper;
-        this.menuCategoryRepository = menuCategoryRepository;
     }
 
     @Override
@@ -38,7 +32,7 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
     public Menu saveMenu(Menu menu) {
         LOG.info("SAVE MENU IN PERSISTENCE LAYER TO DB STARTED");
         MenuEntity menuEntity;
-        if(Objects.nonNull(menu.getMenuId())) {
+        if (Objects.nonNull(menu.getMenuId())) {
             menuEntity = menuRepository.findByMenuIdLocked(menu.getMenuId())
                     .orElse(new MenuEntity());
             menuEntity.setDescription(menu.getDescription());
@@ -62,7 +56,7 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
                 .toList();
         menuRepository.saveAll(menuEntityList);
         menus = menuEntityList.stream()
-                        .map(menuMapper::toMenu).toList();
+                .map(menuMapper::toMenu).toList();
         LOG.info("SAVE LIST OF MENU IN PERSISTENCE LAYER TO DB FINISHED");
         return menus;
     }
@@ -71,7 +65,7 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
     public Optional<Menu> getMenuById(UUID id) {
         LOG.info("GET MENU IN PERSISTENCE LAYER FROM DB");
         MenuEntity menuEntity = menuRepository.findById(id).orElse(null);
-        if(Objects.nonNull(menuEntity)){
+        if (Objects.nonNull(menuEntity)) {
             return Optional.of(menuMapper.toMenu(menuEntity));
         }
         return Optional.empty();

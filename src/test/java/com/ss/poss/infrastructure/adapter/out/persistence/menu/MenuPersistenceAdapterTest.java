@@ -3,11 +3,8 @@ package com.ss.poss.infrastructure.adapter.out.persistence.menu;
 import com.ss.poss.domain.menu.mapper.MenuMapperImpl;
 import com.ss.poss.domain.menu.model.Menu;
 import com.ss.poss.domain.menucategory.mapper.MenuCategoryMapper;
-import com.ss.poss.domain.menucategory.mapper.MenuCategoryMapperImpl;
-import com.ss.poss.domain.menucategory.model.MenuCategory;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuCategoryEntity;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuEntity;
-import com.ss.poss.infrastructure.adapter.out.persistence.menucategory.MenuCategoryRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -18,18 +15,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
 
 @ActiveProfiles("test")
 class MenuPersistenceAdapterTest {
-    private final MenuRepository menuRepository = Mockito.mock(MenuRepository.class);
-    private final MenuCategoryMapper menuCategoryMapper = Mockito.mock(MenuCategoryMapper.class);
-    private final MenuMapperImpl menuMapper = new MenuMapperImpl(menuCategoryMapper);
-    private final MenuCategoryRepository menuCategoryRepository = Mockito.mock(MenuCategoryRepository.class);
-    private final MenuPersistenceAdapter menuPersistenceAdapter = new MenuPersistenceAdapter(menuRepository, menuMapper, menuCategoryRepository);
     private static Menu menu;
     private static MenuEntity menuEntity;
     private static MenuCategoryEntity menuCategoryEntity;
+    private final MenuRepository menuRepository = Mockito.mock(MenuRepository.class);
+    private final MenuCategoryMapper menuCategoryMapper = Mockito.mock(MenuCategoryMapper.class);
+    private final MenuMapperImpl menuMapper = new MenuMapperImpl(menuCategoryMapper);
+    private final MenuPersistenceAdapter menuPersistenceAdapter = new MenuPersistenceAdapter(menuRepository, menuMapper);
 
     @BeforeAll
     static void setUp() {
@@ -45,7 +42,6 @@ class MenuPersistenceAdapterTest {
         given(menuRepository.findByMenuIdLocked(any(UUID.class))).willReturn(Optional.of(menuEntity));
         given(menuRepository.save(any(MenuEntity.class))).willReturn(menuEntity);
         given(menuCategoryMapper.map(any(UUID.class))).willReturn(menuCategoryEntity);
-        given(menuCategoryRepository.findById(any(UUID.class))).willReturn(Optional.of(menuCategoryEntity));
         Menu objTest = menuPersistenceAdapter.saveMenu(menu);
         assertNotNull(objTest);
         assertNotNull(objTest.getMenuId());
