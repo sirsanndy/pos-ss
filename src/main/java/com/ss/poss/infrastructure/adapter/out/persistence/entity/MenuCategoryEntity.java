@@ -25,8 +25,8 @@ public class MenuCategoryEntity extends BaseEntity {
     @Column(name = "MENU_CATEGORY_NAME")
     private String menuCategoryName;
 
-    @Column(name = "MENU_CATEGORY_DESCRIPTION")
-    private String menuCategoryDescription;
+    @Column(name = "MENU_CATEGORY_DESC")
+    private String menuCategoryDesc;
 
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
