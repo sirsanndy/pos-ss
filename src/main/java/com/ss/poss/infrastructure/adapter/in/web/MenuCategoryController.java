@@ -40,7 +40,7 @@ public class MenuCategoryController {
     public ResponseEntity<MenuCategory> getMenuCategories(@PathVariable UUID menuCategoryId) {
         LOG.info("GET MENU CATEGORY REQUEST IS STARTED");
         try {
-            MenuCategory menuCategory = menuCategoryService.getMenuCategory(menuCategoryId);
+            MenuCategory menuCategory = menuCategoryService.getMenuCategoryById(menuCategoryId);
             return ResponseEntity.ok(menuCategory);
         } catch (Exception e){
             LOG.error("GET MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());
