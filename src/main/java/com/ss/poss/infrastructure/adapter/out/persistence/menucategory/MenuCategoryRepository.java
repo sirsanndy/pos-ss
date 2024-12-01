@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MenuCategoryRepository extends JpaRepository<MenuCategoryEntity, UUID> {
-    List<MenuCategoryEntity> findAllOrderByCreatedAtDesc();
+    List<MenuCategoryEntity> findAllByOrderByCreatedAtDesc();
 }

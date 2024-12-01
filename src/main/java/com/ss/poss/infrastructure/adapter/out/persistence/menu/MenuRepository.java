@@ -19,5 +19,5 @@ public interface MenuRepository extends JpaRepository<MenuEntity, UUID> {
     @Query("from MenuEntity where menuId = ?1")
     Optional<MenuEntity> findByMenuIdLocked(UUID menuId);
 
-    List<MenuEntity> findAllOrderByCreatedAtDesc();
+    List<MenuEntity> findAllByOrderByCreatedAtDesc();
 }

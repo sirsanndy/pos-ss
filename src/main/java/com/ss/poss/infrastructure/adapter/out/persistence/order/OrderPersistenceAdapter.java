@@ -71,7 +71,7 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
     @Override
     public List<Order> getAllOrders() {
         LOG.info("GET LIST ORDER IN PERSISTENCE LAYER FROM DB");
-        return orderRepository.findAllOrderByCreatedAtDesc()
+        return orderRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(orderMapper::toOrder)
                 .collect(Collectors.toList());
