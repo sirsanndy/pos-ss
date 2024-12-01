@@ -17,4 +17,5 @@ public class MenuCategory implements Serializable {
     private UUID menuCategoryId;
     private String menuCategoryName;
     private String menuCategoryDesc;
+    private Boolean isActive;
 }

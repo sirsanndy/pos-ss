@@ -3,8 +3,8 @@ spring:
     name: poss
   datasource:
     url: jdbc:postgresql://localhost:5432/pos-api
-    username: admin-poss
-    password: poss
+    username: admin
+    password: admin
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

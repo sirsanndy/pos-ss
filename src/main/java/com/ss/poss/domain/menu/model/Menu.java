@@ -20,4 +20,5 @@ public class Menu implements Serializable {
     private String description;
     private Integer stock;
     private BigDecimal price;
+    private Boolean isActive;
 }

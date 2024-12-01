@@ -35,6 +35,9 @@ public class MenuEntity extends BaseEntity {
     @Column(name = "PRICE")
     private BigDecimal price;
 
+    @Column(name = "IS_ACTIVE")
+    private Boolean isActive;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MENU_CATEGORY_ID")
     private MenuCategoryEntity menuCategory;

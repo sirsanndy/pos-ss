@@ -28,6 +28,9 @@ public class MenuCategoryEntity extends BaseEntity {
     @Column(name = "MENU_CATEGORY_DESCRIPTION")
     private String menuCategoryDescription;
 
+    @Column(name = "IS_ACTIVE")
+    private Boolean isActive;
+
     @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "MENU_ID")
     private List<MenuEntity> listMenu;
