@@ -51,7 +51,7 @@ public class OrderController {
     public ResponseEntity<List<Order>> getListOrder(){
         LOG.info("GET LIST ORDER REQUEST STARTED");
         try {
-            List<Order> orderList = orderService.getListOrder();
+            List<Order> orderList = orderService.getAllOrder();
             return ResponseEntity.ok(orderList);
         } catch (Exception e){
             LOG.error("ERROR WHEN GET LIST ORDER REQUEST : {}", e.getMessage());

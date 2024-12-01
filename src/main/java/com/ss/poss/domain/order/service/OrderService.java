@@ -46,9 +46,9 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
     }
 
     @Override
-    public List<Order> getListOrder() {
+    public List<Order> getAllOrder() {
         LOG.info("Get list order service");
-        List<Order> orderList = orderPersistenceAdapter.getListOrder();
+        List<Order> orderList = orderPersistenceAdapter.getAllOrders();
         return orderList;
     }
 }

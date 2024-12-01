@@ -5,5 +5,5 @@ import com.ss.poss.domain.order.model.Order;
 import java.util.List;
 
 public interface GetListOrderUseCase {
-    List<Order> getListOrder();
+    List<Order> getAllOrder();
 }
