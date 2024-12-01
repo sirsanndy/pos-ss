@@ -34,4 +34,8 @@ public class MenuEntity extends BaseEntity {
 
     @Column(name = "PRICE")
     private BigDecimal price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MENU_CATEGORY_ID")
+    private MenuCategoryEntity menuCategory;
 }
