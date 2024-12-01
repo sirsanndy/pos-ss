@@ -46,7 +46,7 @@ public class MenuController {
         }
     }
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<Menu> createMenu(@RequestBody Menu menu){
         LOG.info("CREATE MENU REQUEST : {} STARTED", menu.getMenuId());
         try {

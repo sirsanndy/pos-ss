@@ -3,8 +3,12 @@ package com.ss.poss.infrastructure.adapter.out.persistence.menu;
 import com.ss.poss.application.port.out.menu.MenuOutputPort;
 import com.ss.poss.domain.menu.mapper.MenuMapper;
 import com.ss.poss.domain.menu.model.Menu;
+import com.ss.poss.domain.menucategory.exception.MenuCategoryNotFoundException;
+import com.ss.poss.domain.menucategory.service.MenuCategoryService;
 import com.ss.poss.infrastructure.adapter.config.Adapter;
+import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuCategoryEntity;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuEntity;
+import com.ss.poss.infrastructure.adapter.out.persistence.menucategory.MenuCategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +25,12 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
 
     private final MenuRepository menuRepository;
     private final MenuMapper menuMapper;
+    private final MenuCategoryRepository menuCategoryRepository;
 
-    public MenuPersistenceAdapter(MenuRepository menuRepository, MenuMapper menuMapper) {
+    public MenuPersistenceAdapter(MenuRepository menuRepository, MenuMapper menuMapper, MenuCategoryRepository menuCategoryRepository) {
         this.menuRepository = menuRepository;
         this.menuMapper = menuMapper;
+        this.menuCategoryRepository = menuCategoryRepository;
     }
 
     @Override

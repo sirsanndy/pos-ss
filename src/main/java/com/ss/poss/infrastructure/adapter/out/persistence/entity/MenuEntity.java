@@ -38,7 +38,7 @@ public class MenuEntity extends BaseEntity {
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "MENU_CATEGORY_ID")
     private MenuCategoryEntity menuCategory;
 }

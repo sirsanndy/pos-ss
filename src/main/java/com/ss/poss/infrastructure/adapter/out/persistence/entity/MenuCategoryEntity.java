@@ -31,7 +31,6 @@ public class MenuCategoryEntity extends BaseEntity {
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "MENU_ID")
+    @OneToMany(mappedBy = "menuCategory", cascade = CascadeType.REMOVE)
     private List<MenuEntity> listMenu;
 }
