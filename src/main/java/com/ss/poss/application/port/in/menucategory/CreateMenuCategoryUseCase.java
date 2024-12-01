@@ -5,6 +5,6 @@ import com.ss.poss.domain.menucategory.model.MenuCategory;
 import java.util.List;
 
 public interface CreateMenuCategoryUseCase {
-    MenuCategory createMenuCategory(MenuCategory menuCategory);
-    List<MenuCategory> createMenuCategory(List<MenuCategory> menuCategoryList);
+    MenuCategory createListMenuCategory(MenuCategory menuCategory);
+    List<MenuCategory> createListMenuCategory(List<MenuCategory> menuCategoryList);
 }
