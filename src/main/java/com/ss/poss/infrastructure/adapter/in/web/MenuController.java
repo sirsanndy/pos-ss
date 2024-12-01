@@ -1,6 +1,7 @@
 package com.ss.poss.infrastructure.adapter.in.web;
 
 import com.ss.poss.domain.menu.model.Menu;
+import com.ss.poss.domain.menu.model.MenuWebhook;
 import com.ss.poss.domain.menu.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @GetMapping("/webhook")
+    @GetMapping("/get-list")
     public ResponseEntity<List<Menu>> getListMenuWebhook(){
         try {
             List<Menu> menuList = menuService.getListMenu();
@@ -42,6 +43,48 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } finally {
             LOG.info("CREATE LIST MENU REQUEST : {} FINISHED", menus.size());
+        }
+    }
+
+    @PutMapping("/create")
+    public ResponseEntity<Menu> createMenu(@RequestBody Menu menu){
+        LOG.info("CREATE MENU REQUEST : {} STARTED", menu.getMenuId());
+        try {
+            menu = menuService.createMenu(menu);
+            return ResponseEntity.ok(menu);
+        } catch (Exception e){
+            LOG.error("CREATE WHEN UPDATE LIST OF MENU REQUEST : {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } finally {
+            LOG.info("CREATE MENU REQUEST : {} FINISHED", menu.getMenuId());
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Menu> updateMenu(@RequestBody Menu menu){
+        LOG.info("UPDATE MENU REQUEST : {} STARTED", menu.getMenuId());
+        try {
+            menu = menuService.createMenu(menu);
+            return ResponseEntity.ok(menu);
+        } catch (Exception e){
+            LOG.error("ERROR WHEN UPDATE LIST OF MENU REQUEST : {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } finally {
+            LOG.info("UPDATE MENU REQUEST : {} FINISHED", menu.getMenuId());
+        }
+    }
+
+    @PostMapping("/webhook")
+    public ResponseEntity<MenuWebhook> webhookMenus(@RequestBody MenuWebhook menuWebhook){
+        LOG.info("WEBHOOK MENU REQUEST : {} STARTED", menuWebhook);
+        try {
+            menuService.send(menuWebhook);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            LOG.error("ERROR WHEN WEBHOOK MENU REQUEST : {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } finally {
+            LOG.info("WEBHOOK MENU REQUEST : {} FINISHED", menuWebhook);
         }
     }
 }

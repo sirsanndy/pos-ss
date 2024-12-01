@@ -3,8 +3,11 @@ package com.ss.poss.domain.menu.service;
 import com.ss.poss.application.port.in.menu.CreateMenuUseCase;
 import com.ss.poss.application.port.in.menu.GetListMenuUseCase;
 import com.ss.poss.application.port.in.menu.GetMenuUseCase;
+import com.ss.poss.application.port.in.menu.WebhookMenuUseCase;
 import com.ss.poss.domain.menu.mapper.MenuMapper;
 import com.ss.poss.domain.menu.model.Menu;
+import com.ss.poss.domain.menu.model.MenuWebhook;
+import com.ss.poss.domain.order.model.OrderWebhook;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuEntity;
 import com.ss.poss.infrastructure.adapter.out.persistence.menu.MenuPersistenceAdapter;
 import org.slf4j.Logger;
@@ -12,22 +15,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMenuUseCase {
+public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMenuUseCase, WebhookMenuUseCase {
     private static final Logger LOG = LoggerFactory.getLogger(MenuService.class);
     private final MenuPersistenceAdapter menuPersistenceAdapter;
-    private final MenuMapper menuMapper;
 
-    public MenuService(MenuPersistenceAdapter menuPersistenceAdapter, MenuMapper menuMapper) {
+    public MenuService(MenuPersistenceAdapter menuPersistenceAdapter) {
         this.menuPersistenceAdapter = menuPersistenceAdapter;
-        this.menuMapper = menuMapper;
     }
 
     @Override
     public Menu createMenu(Menu menu) {
-        return null;
+        LOG.info("Create or Update menu: {} started", menu.getMenuId());
+        menu = menuPersistenceAdapter.saveMenu(menu);
+        LOG.info("Create or Update menu: {} finished", menu.getMenuId());
+        return menu;
     }
 
     @Override
@@ -46,6 +51,12 @@ public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMe
 
     @Override
     public Menu getMenuById(UUID menuId) {
+        LOG.info("GET MENU SERVICE BY ID: {}", menuId);
         return menuPersistenceAdapter.getMenuById(menuId).orElse(null);
+    }
+
+    @Override
+    public void send(MenuWebhook menuWebhook) {
+
     }
 }
