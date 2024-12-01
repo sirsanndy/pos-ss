@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MenuCategoryMapper {
     MenuCategoryEntity toMenuCategoryEntity(MenuCategory menuCategory);
-    MenuCategory toMenuCategory(MenuCategory menuCategory);
+    MenuCategory toMenuCategory(MenuCategoryEntity menuCategoryEntity);
 }
