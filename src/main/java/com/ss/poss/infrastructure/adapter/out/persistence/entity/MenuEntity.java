@@ -2,9 +2,9 @@ package com.ss.poss.infrastructure.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -41,4 +41,8 @@ public class MenuEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "MENU_CATEGORY_ID")
     private MenuCategoryEntity menuCategory;
+
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private List<OrderDetailEntity> listOrderDetail;
 }

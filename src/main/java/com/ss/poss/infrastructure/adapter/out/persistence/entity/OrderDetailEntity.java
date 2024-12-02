@@ -13,20 +13,23 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(OrderDetailId.class)
 public class OrderDetailEntity extends BaseEntity {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.AUTO,
-            generator = "pg-uuid"
-    )
-    @Column(name = "ORDER_DETAIL_ID")
-    private UUID orderDetailId;
+    @Column(name = "ORDER_ID", nullable = false)
+    private UUID orderId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @Column(name = "MENU_ID", nullable = false)
+    private UUID menuId;
+
+    @ManyToOne
+    @MapsId("menuId")
     @JoinColumn(name = "MENU_ID")
     private MenuEntity menu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @MapsId("orderId")
     @JoinColumn(name = "ORDER_ID")
     private OrderEntity order;
 
