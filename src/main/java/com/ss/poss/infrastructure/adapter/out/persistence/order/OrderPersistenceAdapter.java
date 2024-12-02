@@ -11,7 +11,6 @@ import com.ss.poss.infrastructure.adapter.config.Adapter;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.OrderEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -34,7 +33,7 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class, RuntimeException.class})
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     public Order saveOrder(Order order) {
         LOG.info("SAVE ORDER IN PERSISTENCE LAYER TO DB STARTED");
 
@@ -48,8 +47,8 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
                 orderEntity = orderMapper.toEntity(order);
             }
             orderRepository.save(orderEntity);
-            List<OrderDetail> orderDetailList = orderDetailService.createOrderDetails(order.getListItem());
             order.setOrderId(orderEntity.getOrderId());
+            List<OrderDetail> orderDetailList = orderDetailService.createOrderDetails(order);
             order.setListItem(orderDetailList);
             LOG.info("SAVE ORDER IN PERSISTENCE LAYER TO DB FINISHED");
         } else {
