@@ -31,7 +31,6 @@ public class OrderEntity extends BaseEntity {
     @Enumerated()
     private OrderStatus orderStatus;
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ORDER_ID")
+    @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetailEntity> listItem;
 }
