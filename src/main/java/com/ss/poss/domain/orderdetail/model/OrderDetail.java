@@ -14,8 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetail {
-    private UUID orderDetailId;
-
+    private UUID orderId;
+    private UUID menuId;
     private Order order;
     private Menu menu;
     private Integer quantity;

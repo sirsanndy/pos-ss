@@ -3,11 +3,13 @@ package com.ss.poss.domain.orderdetail.service;
 import com.ss.poss.application.port.in.orderdetail.CreateOrderDetailUseCase;
 import com.ss.poss.application.port.in.orderdetail.GetListOrderDetailUseCase;
 import com.ss.poss.application.port.in.orderdetail.GetOrderDetailUseCase;
+import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.orderdetail.model.OrderDetail;
 import com.ss.poss.infrastructure.adapter.out.persistence.orderdetail.OrderDetailPersistenceAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,17 +26,18 @@ public class OrderDetailService implements CreateOrderDetailUseCase, GetOrderDet
 
     @Override
     public OrderDetail createOrderDetail(OrderDetail orderDetail) {
-        LOG.info("Create order detail: {} started", orderDetail.getOrderDetailId());
+        LOG.info("Create order detail: {} started", orderDetail.getOrderId());
         orderDetailPersistenceAdapter.saveOrderDetail(orderDetail);
-        LOG.info("Create order detail: {} finished", orderDetail.getOrderDetailId());
+        LOG.info("Create order detail: {} finished", orderDetail.getOrderId());
         return orderDetail;
     }
 
     @Override
-    public List<OrderDetail> createOrderDetails(List<OrderDetail> orderDetailList) {
-        LOG.info("Create order detail list : {} started", orderDetailList.size());
-        orderDetailList = orderDetailPersistenceAdapter.saveOrderDetails(orderDetailList);
-        LOG.info("Create order detail list : {} finished", orderDetailList.size());
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
+    public List<OrderDetail> createOrderDetails(Order order) {
+        LOG.info("Create order detail list : {} started", order.getListItem().size());
+        List<OrderDetail> orderDetailList = orderDetailPersistenceAdapter.saveOrderDetails(order);
+        LOG.info("Create order detail list : {} finished",  order.getListItem().size());
 
         return orderDetailList;
     }
