@@ -1,0 +1,23 @@
+package com.ss.poss.infrastructure.adapter.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+
+@Configuration
+@EnableWebSocket
+public class WebSocketConfiguration implements WebSocketConfigurer {
+    private final OrderWebSocketHandler orderWebSocketHandler;
+    public WebSocketConfiguration(OrderWebSocketHandler orderWebSocketHandler) {
+        this.orderWebSocketHandler = orderWebSocketHandler;
+    }
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(orderWebSocketHandler, "/ws/orders")
+                .addInterceptors(new HttpSessionHandshakeInterceptor())
+                .setAllowedOrigins("*");
+    }
+}
+

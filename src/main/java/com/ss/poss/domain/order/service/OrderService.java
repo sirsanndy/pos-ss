@@ -1,13 +1,16 @@
 package com.ss.poss.domain.order.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.poss.application.port.in.order.*;
 import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.model.OrderWebhook;
+import com.ss.poss.infrastructure.adapter.config.OrderWebSocketHandler;
 import com.ss.poss.infrastructure.adapter.out.persistence.order.OrderPersistenceAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,15 +20,20 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
     private static final Logger LOG = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderPersistenceAdapter orderPersistenceAdapter;
+    private final OrderWebSocketHandler webSocketHandler;
+    private final ObjectMapper objectMapper;
 
-    public OrderService(OrderPersistenceAdapter orderPersistenceAdapter) {
+    public OrderService(OrderPersistenceAdapter orderPersistenceAdapter, OrderWebSocketHandler webSocketHandler, ObjectMapper objectMapper) {
         this.orderPersistenceAdapter = orderPersistenceAdapter;
+        this.webSocketHandler = webSocketHandler;
+        this.objectMapper = objectMapper;
     }
 
     @Override
-    public Order createOrder(Order order) {
+    public Order createOrder(Order order) throws IOException {
         LOG.info("Submit order service: {} started", order);
-        orderPersistenceAdapter.saveOrder(order);
+        order = orderPersistenceAdapter.saveOrder(order);
+        webSocketHandler.broadcastOrder(objectMapper.writeValueAsString(order));
         LOG.info("Submit order service: {} finished", order);
         return order;
     }
