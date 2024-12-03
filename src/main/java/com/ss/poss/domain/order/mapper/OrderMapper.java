@@ -1,6 +1,7 @@
 package com.ss.poss.domain.order.mapper;
 
 import com.ss.poss.domain.order.model.Order;
+import com.ss.poss.domain.order.model.OrderStatus;
 import com.ss.poss.domain.orderdetail.model.OrderDetail;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.OrderDetailEntity;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.OrderEntity;
@@ -11,7 +12,7 @@ import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring", collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
 public interface OrderMapper {
-    OrderEntity toEntity(Order order);
+    OrderEntity toEntity(Order order, OrderStatus orderStatus);
 
     @Mapping(target = "listItem", qualifiedByName = "orderDetailEntityToDto")
     Order toOrder(OrderEntity orderEntity);

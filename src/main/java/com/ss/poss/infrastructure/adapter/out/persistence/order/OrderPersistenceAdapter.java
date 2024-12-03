@@ -43,8 +43,10 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
                 orderEntity = orderRepository.findById(order.getOrderId())
                         .orElseThrow(() -> new OrderNotFoundException(String.format("ORDER WITH ORDER ID %s IS NOT FOUND",
                                 order.getOrderId().toString())));
+                orderEntity.setOrderStatus(order.getOrderStatus());
+                orderEntity.setTotalPrice(order.getTotalPrice());
             } else {
-                orderEntity = orderMapper.toEntity(order);
+                orderEntity = orderMapper.toEntity(order, order.getOrderStatus());
             }
             orderRepository.save(orderEntity);
             order.setOrderId(orderEntity.getOrderId());
