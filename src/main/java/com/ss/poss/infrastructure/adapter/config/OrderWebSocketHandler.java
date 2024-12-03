@@ -1,5 +1,7 @@
 package com.ss.poss.infrastructure.adapter.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Component
 public class OrderWebSocketHandler extends TextWebSocketHandler {
+    private static Logger LOG = LoggerFactory.getLogger(OrderWebSocketHandler.class);
+
     List<WebSocketSession> sessions = Collections.synchronizedList(new ArrayList<>());
 
     @Override
@@ -32,13 +36,14 @@ public class OrderWebSocketHandler extends TextWebSocketHandler {
     }
 
     public void broadcastOrder(String orderMessage) {
+        LOG.info("broadcasting order: {}", orderMessage);
         TextMessage message = new TextMessage(orderMessage);
         for (WebSocketSession session : this.sessions) {
             if (session.isOpen()) {
                 try {
                     session.sendMessage(message);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOG.error("Error sending message {}", e.getMessage());
                 }
             }
         }
