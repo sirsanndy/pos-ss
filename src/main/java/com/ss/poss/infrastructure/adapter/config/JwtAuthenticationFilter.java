@@ -1,7 +1,6 @@
 package com.ss.poss.infrastructure.adapter.config;
 
 import com.ss.poss.domain.jwt.service.JwtService;
-import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,16 +38,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (jwt == null && authHeader.startsWith("Bearer ")) {
+        if (jwt == null && authHeader.startsWith("Bearer")) {
             jwt = authHeader.substring(7);
         }
 
-        final String userEmail = jwtService.getUsername(jwt);
-
-        if(StringUtils.isNotEmpty(userEmail)
-                && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if(jwtService.validateToken(jwt, userDetails)){
+        if(SecurityContextHolder.getContext().getAuthentication() == null){
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtService.getUsername(jwt));
+            if(jwtService.validateToken(jwt)){
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
