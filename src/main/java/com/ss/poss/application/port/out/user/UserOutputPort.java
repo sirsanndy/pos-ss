@@ -9,4 +9,5 @@ public interface UserOutputPort {
     User getUserById(UUID userId);
     User saveUser(User user);
     List<User> getAllUsers();
+    User getUserByUsername(String username);
 }

@@ -24,7 +24,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Override
     public User getUserById(UUID userId) {
-        LOG.info("Get user by id: {}", userId);
+        LOG.info("Get user by id: {} to DB layer", userId);
         return userRepository.findById(userId)
                 .map(userMapper::toUser)
                 .orElse(null);
@@ -32,7 +32,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Override
     public User saveUser(User user) {
-        LOG.info("Save user: {}", user);
+        LOG.info("Save user: {} to DB layer", user);
         UserEntity userEntity = userMapper.toUserEntity(user);
         userRepository.save(userEntity);
         user.setId(userEntity.getUserId());
@@ -41,10 +41,18 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Override
     public List<User> getAllUsers() {
-        LOG.info("Get all users");
+        LOG.info("Get all users to DB layer");
         return userRepository.findAll()
                 .stream()
                 .map(userMapper::toUser)
                 .toList();
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        LOG.info("Get user by username: {} to DB layer", username);
+        return userRepository.findByUsername(username)
+                .map(userMapper::toUser)
+                .orElse(null);
     }
 }

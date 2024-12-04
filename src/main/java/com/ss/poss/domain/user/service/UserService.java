@@ -38,4 +38,10 @@ public class UserService implements CreateUserUseCase, GetUserUseCase, GetListUs
         LOG.info("Get user by id: {} service", userId);
         return userPersistenceAdapter.getUserById(userId);
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        LOG.info("Get user by name: {} service", username);
+        return userPersistenceAdapter.getUserByUsername(username);
+    }
 }

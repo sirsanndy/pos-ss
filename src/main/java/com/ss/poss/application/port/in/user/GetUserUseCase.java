@@ -6,4 +6,5 @@ import java.util.UUID;
 
 public interface GetUserUseCase {
     User getUserById(UUID userId);
+    User getUserByUsername(String username);
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(
