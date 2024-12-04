@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -31,7 +30,6 @@ public class AuthService {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     public String authenticate(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
