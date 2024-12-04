@@ -82,6 +82,7 @@ public class JwtTokenProvider {
             Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
             return true;
         } catch (Exception e) {
+            LOG.error("ERROR WHEN INVALID TOKEN: {}", token, e);
             return false;
         }
     }
