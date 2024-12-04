@@ -4,18 +4,14 @@ import com.ss.poss.application.port.in.menu.CreateMenuUseCase;
 import com.ss.poss.application.port.in.menu.GetListMenuUseCase;
 import com.ss.poss.application.port.in.menu.GetMenuUseCase;
 import com.ss.poss.application.port.in.menu.WebhookMenuUseCase;
-import com.ss.poss.domain.menu.mapper.MenuMapper;
 import com.ss.poss.domain.menu.model.Menu;
 import com.ss.poss.domain.menu.model.MenuWebhook;
-import com.ss.poss.domain.order.model.OrderWebhook;
-import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuEntity;
 import com.ss.poss.infrastructure.adapter.out.persistence.menu.MenuPersistenceAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
