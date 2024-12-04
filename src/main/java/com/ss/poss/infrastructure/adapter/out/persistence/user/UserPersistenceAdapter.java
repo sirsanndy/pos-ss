@@ -35,7 +35,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
         LOG.info("Save user: {} to DB layer", user);
         UserEntity userEntity = userMapper.toUserEntity(user);
         userRepository.save(userEntity);
-        user.setId(userEntity.getUserId());
+        user.setUserId(userEntity.getUserId());
         return user;
     }
 

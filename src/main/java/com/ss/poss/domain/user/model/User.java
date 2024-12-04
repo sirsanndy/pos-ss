@@ -13,7 +13,7 @@ public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private UUID id;
+    private UUID userId;
     private String username;
     private String password;
     private String email;
