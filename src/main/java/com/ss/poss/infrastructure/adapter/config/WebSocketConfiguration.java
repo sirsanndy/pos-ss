@@ -10,14 +10,19 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 @EnableWebSocket
 public class WebSocketConfiguration implements WebSocketConfigurer {
     private final OrderWebSocketHandler orderWebSocketHandler;
-    public WebSocketConfiguration(OrderWebSocketHandler orderWebSocketHandler) {
+    private final JwtHandshakeInterceptor jwtHandshakeInterceptor;
+
+    public WebSocketConfiguration(OrderWebSocketHandler orderWebSocketHandler, JwtHandshakeInterceptor jwtHandshakeInterceptor) {
         this.orderWebSocketHandler = orderWebSocketHandler;
+        this.jwtHandshakeInterceptor = jwtHandshakeInterceptor;
     }
+
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(orderWebSocketHandler, "/ws/orders")
-                .addInterceptors(new HttpSessionHandshakeInterceptor())
+                .addInterceptors(new HttpSessionHandshakeInterceptor(), jwtHandshakeInterceptor)
                 .setAllowedOrigins("*");
     }
 }
+
 
