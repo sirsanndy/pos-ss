@@ -3,6 +3,8 @@ package com.ss.poss.infrastructure.adapter.config;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +17,7 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     @Value("${jwt.secret}")
     private String SECRET_KEY;
@@ -59,12 +62,19 @@ public class JwtTokenProvider {
     }
 
     public String getUsernameFromToken(String token) {
-        return Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .getSubject();
+        LOG.info("CREATE USERNAME FROM TOKEN: {}", token);
+        String username = "";
+        try {
+            username = Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getSubject();
+        } catch (Exception e) {
+            LOG.error("ERROR WHEN GET USERNAME FROM TOKEN: {}", token, e);
+        }
+        return username;
     }
 
     public boolean validateToken(String token) {
