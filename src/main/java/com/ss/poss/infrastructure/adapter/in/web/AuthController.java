@@ -32,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<AuthRequest> signup(@RequestBody SignupRequest signupRequest) {
         LOG.info("Signing up {} request", signupRequest);
         return ResponseEntity.ok(authService.signup(signupRequest));
     }

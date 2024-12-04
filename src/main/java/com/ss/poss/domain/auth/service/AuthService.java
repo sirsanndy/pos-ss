@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class AuthService {
 
@@ -56,17 +58,31 @@ public class AuthService {
         }
     }
 
-    public String signup(SignupRequest signupRequest) {
-        User user = new User();
-        user.setUsername(signupRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-        user.setEmail(signupRequest.getEmail());
+    public AuthRequest signup(SignupRequest signupRequest) {
+        User user = userService.getUserByUsername(signupRequest.getUsername());
+        if(Objects.isNull(user)) {
+            user = new User();
+            user.setUsername(signupRequest.getUsername());
+            user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+            user.setEmail(signupRequest.getEmail());
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(signupRequest.getUsername(), signupRequest.getPassword());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
-        user.setRefreshToken(refreshToken);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(signupRequest.getUsername(), signupRequest.getPassword());
+            AuthRequest authRequest = getAuthRequest(signupRequest, authentication);
 
-        userService.createUser(user);
-        return "User registered successfully!";
+            user.setRefreshToken(authRequest.getRefreshToken());
+
+            userService.createUser(user);
+            return authRequest;
+        } else {
+            throw new RuntimeException("User already exists");
+        }
+    }
+
+    private AuthRequest getAuthRequest(SignupRequest signupRequest, Authentication authentication) {
+        AuthRequest authRequest = new AuthRequest();
+        authRequest.setUsername(signupRequest.getUsername());
+        authRequest.setRefreshToken(jwtTokenProvider.generateRefreshToken(authentication));
+        authRequest.setToken(jwtTokenProvider.generateAccessToken(authentication));
+        return authRequest;
     }
 }
