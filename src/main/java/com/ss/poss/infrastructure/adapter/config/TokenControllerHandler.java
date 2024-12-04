@@ -47,7 +47,7 @@ public class TokenControllerHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleException(HttpMessageNotReadableException ex) {
-        return new ResponseEntity<>("Cannot parse JSON", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Cannot parse JSON" + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
