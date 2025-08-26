@@ -1,7 +1,9 @@
 package com.ss.poss.infrastructure.adapter.in.web;
 
+import com.ss.poss.application.port.in.menucategory.CreateMenuCategoryUseCase;
+import com.ss.poss.application.port.in.menucategory.GetListMenuCategoryUseCase;
+import com.ss.poss.application.port.in.menucategory.GetMenuCategoryUseCase;
 import com.ss.poss.domain.menucategory.model.MenuCategory;
-import com.ss.poss.domain.menucategory.service.MenuCategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,17 +18,21 @@ import java.util.UUID;
 public class MenuCategoryController {
     private static final Logger LOG = LoggerFactory.getLogger(MenuCategoryController.class);
 
-    private final MenuCategoryService menuCategoryService;
+    private final CreateMenuCategoryUseCase createMenuCategoryUseCase;
+    private final GetMenuCategoryUseCase getMenuCategoryUseCase;
+    private final GetListMenuCategoryUseCase getListMenuCategoryUseCase;
 
-    public MenuCategoryController(MenuCategoryService menuCategoryService) {
-        this.menuCategoryService = menuCategoryService;
+    public MenuCategoryController(CreateMenuCategoryUseCase createMenuCategoryUseCase, GetMenuCategoryUseCase getMenuCategoryUseCase, GetListMenuCategoryUseCase getListMenuCategoryUseCase) {
+        this.createMenuCategoryUseCase = createMenuCategoryUseCase;
+        this.getMenuCategoryUseCase = getMenuCategoryUseCase;
+        this.getListMenuCategoryUseCase = getListMenuCategoryUseCase;
     }
 
     @GetMapping("/get-list")
     public ResponseEntity<List<MenuCategory>> getMenuCategories() {
         LOG.info("GET LIST MENU CATEGORY REQUEST IS STARTED");
         try {
-            List<MenuCategory> menuCategoryList = menuCategoryService.getListMenuCategory();
+            List<MenuCategory> menuCategoryList = getListMenuCategoryUseCase.getListMenuCategory();
             return ResponseEntity.ok(menuCategoryList);
         } catch (Exception e){
             LOG.error("GET LIST MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());
@@ -40,7 +46,7 @@ public class MenuCategoryController {
     public ResponseEntity<MenuCategory> getMenuCategories(@PathVariable UUID menuCategoryId) {
         LOG.info("GET MENU CATEGORY REQUEST IS STARTED");
         try {
-            MenuCategory menuCategory = menuCategoryService.getMenuCategoryById(menuCategoryId);
+            MenuCategory menuCategory = getMenuCategoryUseCase.getMenuCategoryById(menuCategoryId);
             return ResponseEntity.ok(menuCategory);
         } catch (Exception e){
             LOG.error("GET MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());
@@ -54,7 +60,7 @@ public class MenuCategoryController {
     public ResponseEntity<MenuCategory> createMenuCategory(@RequestBody MenuCategory menuCategory) {
         LOG.info("CREATE MENU CATEGORY REQUEST IS STARTED");
         try {
-            menuCategory = menuCategoryService.createMenuCategory(menuCategory);
+            menuCategory = createMenuCategoryUseCase.createMenuCategory(menuCategory);
             return ResponseEntity.ok(menuCategory);
         } catch (Exception e){
             LOG.error("CREATE MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());
@@ -68,7 +74,7 @@ public class MenuCategoryController {
     public ResponseEntity<MenuCategory> updateMenuCategory(@RequestBody MenuCategory menuCategory) {
         LOG.info("UPDATE MENU CATEGORY REQUEST IS STARTED");
         try {
-            menuCategory = menuCategoryService.createMenuCategory(menuCategory);
+            menuCategory = createMenuCategoryUseCase.createMenuCategory(menuCategory);
             return ResponseEntity.ok(menuCategory);
         } catch (Exception e){
             LOG.error("UPDATE MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());
@@ -82,7 +88,7 @@ public class MenuCategoryController {
     public ResponseEntity<List<MenuCategory>> createListMenuCategories(@RequestBody List<MenuCategory> menuCategories) {
         LOG.info("CREATE LIST MENU CATEGORY REQUEST IS STARTED");
         try {
-            List<MenuCategory> menuCategoryList = menuCategoryService.createListMenuCategory(menuCategories);
+            List<MenuCategory> menuCategoryList = createMenuCategoryUseCase.createListMenuCategory(menuCategories);
             return ResponseEntity.ok(menuCategoryList);
         } catch (Exception e){
             LOG.error("CREATE LIST MENU CATEGORY REQUEST IS ERROR WITH ERROR MESSAGE : {} ", e.getMessage());

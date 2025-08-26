@@ -34,7 +34,7 @@ public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMe
     @Override
     public List<Menu> createMenus(List<Menu> menus) {
         LOG.info("Create menus for {} started", menus.size());
-        menus = menuPersistenceAdapter.createMenus(menus);;
+        menus = menuPersistenceAdapter.createMenus(menus);
         LOG.info("Create menus for {} finished", menus.size());
         return menus;
     }
@@ -53,6 +53,6 @@ public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMe
 
     @Override
     public void send(MenuWebhook menuWebhook) {
-
+        LOG.info("SEND MENU WEBHOOK SERVICE: {}", menuWebhook.getEvent());
     }
 }
