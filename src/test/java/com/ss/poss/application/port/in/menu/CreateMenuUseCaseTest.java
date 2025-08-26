@@ -10,7 +10,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
-@ActiveProfiles("test")
 class CreateMenuUseCaseTest extends MenuUseCasesTest {
     private final CreateMenuUseCase createMenuUseCase = menuService;
 

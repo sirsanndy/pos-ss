@@ -8,7 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ActiveProfiles("test")
 public class GetMenuUseCaseTest extends MenuUseCasesTest {
     private final GetMenuUseCase getMenuUseCase = menuService;
 
