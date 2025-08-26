@@ -2,6 +2,7 @@ package com.ss.poss.domain.order.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.poss.application.port.in.order.*;
+import com.ss.poss.domain.order.exception.OrderNotFoundException;
 import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.model.OrderWebhook;
 import com.ss.poss.infrastructure.adapter.config.OrderWebSocketHandler;
@@ -40,7 +41,11 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
 
     @Override
     public Order getOrderById(UUID id) {
-        return null;
+        LOG.info("Get order by id service: {} started", id);
+        Order order = orderPersistenceAdapter.getOrderById(id)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found"));
+        LOG.info("Get order by id service: {} finished", id);
+        return order;
     }
 
     @Override
@@ -50,7 +55,7 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
 
     @Override
     public void deleteOrder(Order order) {
-
+        LOG.info("Delete order service: {} started", order.getOrderId());
     }
 
     @Override
