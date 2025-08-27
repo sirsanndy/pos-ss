@@ -17,24 +17,26 @@ class CreateMenuUseCaseTest extends MenuUseCasesTest {
     void createMenu() {
         given(menuPersistenceAdapter.saveMenu(menu)).willReturn(menu);
         Menu result = createMenuUseCase.createMenu(menu);
-        Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).saveMenu(menu);
-
-        assertNotNull(result);
-        assertEquals(menu, result);
-        assertEquals(menu.getMenuId(), result.getMenuId());
+        assertAll(()->{
+            Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).saveMenu(menu);
+            assertNotNull(result);
+            assertEquals(menu, result);
+            assertEquals(menu.getMenuId(), result.getMenuId());
+        });
     }
 
     @Test
     void createMenus() {
         given(menuPersistenceAdapter.createMenus(menus)).willReturn(menus);
         List<Menu> result = createMenuUseCase.createMenus(menus);
-        Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).createMenus(menus);
-
-        assertNotNull(result);
-        assertFalse(result.isEmpty());
-        for (Menu menuTest : result) {
-            assertNotNull(menuTest.getMenuId());
-            assertTrue(menus.contains(menuTest));
-        }
+        assertAll(()-> {
+            Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).createMenus(menus);
+            assertNotNull(result);
+            assertFalse(result.isEmpty());
+            for (Menu menuTest : result) {
+                assertNotNull(menuTest.getMenuId());
+                assertTrue(menus.contains(menuTest));
+            }
+        });
     }
 }

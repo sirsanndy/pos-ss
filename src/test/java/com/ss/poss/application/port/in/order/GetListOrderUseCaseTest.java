@@ -16,13 +16,15 @@ public class GetListOrderUseCaseTest extends OrderUseCasesTest {
      void getListOrder() {
          given(orderPersistenceAdapter.getAllOrders()).willReturn(orders);
          List<Order> result = getListOrderUseCase.getAllOrder();
-         assertNotNull(result);
-         assertFalse(result.isEmpty());
-         assertEquals(orders.size(), result.size());
-         Mockito.verify(orderPersistenceAdapter, Mockito.times(1)).getAllOrders();
-         for (Order orderTest : result) {
-             assertNotNull(orderTest);
-             assertTrue(orders.contains(orderTest));
-         }
+         assertAll(()-> {
+             assertNotNull(result);
+             assertFalse(result.isEmpty());
+             assertEquals(orders.size(), result.size());
+             Mockito.verify(orderPersistenceAdapter, Mockito.times(1)).getAllOrders();
+             for (Order orderTest : result) {
+                 assertNotNull(orderTest);
+                 assertTrue(orders.contains(orderTest));
+             }
+         });
      }
 }
