@@ -10,5 +10,5 @@ public record SignupRequest (
         String phone
 ) implements Serializable {
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4613034645623965348L;
 }
