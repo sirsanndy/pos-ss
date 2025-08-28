@@ -15,5 +15,5 @@ public record Menu(
         Boolean isActive
 ) implements Serializable {
     @Serial
-    static final long serialVersionUID = 4114873224866368052L;
+    private static final long serialVersionUID = 4114873224866368052L;
 }
