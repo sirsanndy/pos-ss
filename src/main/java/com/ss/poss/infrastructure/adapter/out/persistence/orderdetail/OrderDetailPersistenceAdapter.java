@@ -14,10 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Adapter
 public class OrderDetailPersistenceAdapter implements OrderDetailOutputPort {
@@ -63,8 +60,9 @@ public class OrderDetailPersistenceAdapter implements OrderDetailOutputPort {
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     public List<OrderDetail> saveOrderDetails(Order order) {
         LOG.info("SAVE ORDER DETAIL IN PERSISTENCE LAYER FROM DB STARTED");
-        List<OrderDetailEntity> orderDetailEntityList = order.getListItem().stream().map(obj -> {
-            Optional<OrderDetailEntity> existOrderDetail = orderDetailRepository.findByOrderIdAndMenuId(order.getOrderId(), obj.menuId());
+        List<MenuEntity> menuEntityList = new ArrayList<>();
+        List<OrderDetailEntity> orderDetailEntityList = order.listItem().stream().map(obj -> {
+            Optional<OrderDetailEntity> existOrderDetail = orderDetailRepository.findByOrderIdAndMenuId(order.orderId(), obj.menuId());
 
             OrderDetailEntity orderDetailEntity = orderDetailMapper.toEntity(obj);
             MenuEntity menuEntity = menuRepository.findByMenuIdLocked(obj.menuId())
@@ -74,14 +72,15 @@ public class OrderDetailPersistenceAdapter implements OrderDetailOutputPort {
                     .orElseGet(obj::quantity)));
             orderDetailEntity.setMenu(menuEntity);
             OrderEntity orderEntity = new OrderEntity();
-            orderEntity.setOrderId(order.getOrderId());
-            orderEntity.setTotalPrice(order.getTotalPrice());
-            menuRepository.save(menuEntity);
+            orderEntity.setOrderId(order.orderId());
+            orderEntity.setTotalPrice(order.totalPrice());
             orderDetailEntity.setOrder(orderEntity);
             return orderDetailEntity;
         }).toList();
+
+        menuRepository.saveAll(menuEntityList);
         orderDetailRepository.saveAll(orderDetailEntityList);
         LOG.info("SAVE ORDER DETAIL IN PERSISTENCE LAYER FROM DB FINISHED");
-        return order.getListItem();
+        return order.listItem();
     }
 }

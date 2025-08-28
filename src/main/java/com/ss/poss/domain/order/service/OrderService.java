@@ -32,10 +32,10 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
 
     @Override
     public Order createOrder(Order order) throws IOException {
-        LOG.info("Submit order service: {} started", order.getOrderId());
+        LOG.info("Submit order service: {} started", order.orderId());
         order = orderPersistenceAdapter.saveOrder(order);
         webSocketHandler.broadcastOrder(objectMapper.writeValueAsString(order));
-        LOG.info("Submit order service: {} finished", order.getOrderId());
+        LOG.info("Submit order service: {} finished", order.orderId());
         return order;
     }
 
@@ -55,7 +55,7 @@ public class OrderService implements CreateOrderUseCase, GetOrderUseCase, Webhoo
 
     @Override
     public void deleteOrder(Order order) {
-        LOG.info("Delete order service: {} started", order.getOrderId());
+        LOG.info("Delete order service: {} started", order.orderId());
     }
 
     @Override

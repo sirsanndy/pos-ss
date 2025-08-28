@@ -2,7 +2,6 @@ package com.ss.poss.infrastructure.adapter.out.persistence.entity;
 
 import com.ss.poss.domain.order.model.OrderStatus;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,24 +38,25 @@ public class OrderPersistenceAdapter implements OrderOutputPort {
     public Order saveOrder(Order order) {
         LOG.info("SAVE ORDER IN PERSISTENCE LAYER TO DB STARTED");
 
-        if(!CollectionUtils.isEmpty(order.getListItem())){
+        if(!CollectionUtils.isEmpty(order.listItem())){
             OrderEntity orderEntity;
-            if(order.getOrderId() != null) {
-                orderEntity = orderRepository.findById(order.getOrderId())
+            UUID orderId = order.orderId();
+            if(orderId != null) {
+                orderEntity = orderRepository.findById(orderId)
                         .orElseThrow(() -> new OrderNotFoundException(String.format("ORDER WITH ORDER ID %s IS NOT FOUND",
-                                order.getOrderId().toString())));
-                orderEntity.setOrderStatus(order.getOrderStatus());
-                orderEntity.setTotalPrice(order.getTotalPrice());
+                                orderId)));
+                orderEntity.setOrderStatus(order.orderStatus());
+                orderEntity.setTotalPrice(order.totalPrice());
             } else {
-                orderEntity = orderMapper.toEntity(order, order.getOrderStatus());
+                orderEntity = orderMapper.toEntity(order, order.orderStatus());
             }
             orderRepository.save(orderEntity);
-            order.setOrderId(orderEntity.getOrderId());
+            order = orderMapper.toOrder(orderEntity);
             List<OrderDetail> orderDetailList = orderDetailService.createOrderDetails(order);
-            order.setListItem(orderDetailList);
+            order = new Order(order.orderId(), order.orderStatus(), order.totalPrice(), orderDetailList);
             LOG.info("SAVE ORDER IN PERSISTENCE LAYER TO DB FINISHED");
         } else {
-            order.setOrderStatus(OrderStatus.REJECTED);
+            order = new Order(order.orderId(), OrderStatus.REJECTED, BigDecimal.valueOf(0L), Collections.emptyList());
         }
         return order;
     }

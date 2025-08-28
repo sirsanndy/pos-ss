@@ -2,6 +2,7 @@ package com.ss.poss.infrastructure.adapter.config;
 
 import com.ss.poss.domain.jwt.exception.TokenException;
 import com.ss.poss.domain.jwt.handler.ErrorResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -22,13 +23,13 @@ public class TokenControllerHandler {
     @ExceptionHandler(value = TokenException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ErrorResponse> handleRefreshTokenException(TokenException ex, WebRequest request){
-        final ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(Instant.now())
-                .error("Invalid Token")
-                .status(HttpStatus.FORBIDDEN.value())
-                .message(ex.getMessage())
-                .path(request.getDescription(false))
-                .build();
+        final ErrorResponse errorResponse = new ErrorResponse(
+                HttpServletResponse.SC_FORBIDDEN,
+                "Invalid Token",
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false));
+
         return new ResponseEntity<>(errorResponse,HttpStatus.FORBIDDEN);
     }
 

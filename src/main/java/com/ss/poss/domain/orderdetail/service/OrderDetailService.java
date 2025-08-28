@@ -38,9 +38,9 @@ public class OrderDetailService implements CreateOrderDetailUseCase, GetOrderDet
     @Override
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     public List<OrderDetail> createOrderDetails(Order order) {
-        LOG.info("Create order detail list : {} started", order.getListItem().size());
+        LOG.info("Create order detail list : {} started", order.listItem().size());
         List<OrderDetail> orderDetailList = orderDetailPersistenceAdapter.saveOrderDetails(order);
-        LOG.info("Create order detail list : {} finished",  order.getListItem().size());
+        LOG.info("Create order detail list : {} finished",  order.listItem().size());
 
         return orderDetailList;
     }

@@ -23,7 +23,7 @@ public class CreateOrderUseCaseTest extends OrderUseCasesTest{
             Mockito.verify(orderWebSocketHandler, Mockito.times(1)).broadcastOrder(Mockito.anyString());
             assertNotNull(result);
             assertEquals(order, result);
-            assertEquals(order.getOrderId(), result.getOrderId());
+            assertEquals(order.orderId(), result.orderId());
         });
     }
 }

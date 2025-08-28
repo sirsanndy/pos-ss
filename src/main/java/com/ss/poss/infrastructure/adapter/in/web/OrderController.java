@@ -74,7 +74,7 @@ public class OrderController {
 
     @PostMapping("/submit")
     public ResponseEntity<Order> submit(@RequestBody @NotNull Order order){
-        LOG.info("SUBMIT ORDER REQUEST : {} STARTED", order.getOrderId());
+        LOG.info("SUBMIT ORDER REQUEST : {} STARTED", order.orderId());
         try {
             order = createOrderUseCase.createOrder(order);
             return ResponseEntity.ok(order);
@@ -82,13 +82,13 @@ public class OrderController {
             LOG.error("ERROR WHEN SUBMIT ORDER REQUEST : {}", e.getMessage());
             return ResponseEntity.internalServerError().body(null);
         } finally {
-            LOG.info("SUBMIT ORDER REQUEST : {} FINISHED", order.getOrderId());
+            LOG.info("SUBMIT ORDER REQUEST : {} FINISHED", order.orderId());
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<Order> updateOrder(@RequestBody @NotNull Order order){
-        LOG.info("UPDATE ORDER REQUEST : {} STARTED", order.getOrderId());
+        LOG.info("UPDATE ORDER REQUEST : {} STARTED", order.orderId());
         try {
             order = createOrderUseCase.createOrder(order);
             return ResponseEntity.ok(order);
@@ -96,7 +96,7 @@ public class OrderController {
             LOG.error("ERROR WHEN CREATE ORDER REQUEST : {}", e.getMessage());
             return ResponseEntity.internalServerError().body(null);
         } finally {
-            LOG.info("UPDATE ORDER REQUEST : {} FINISHED", order.getOrderId());
+            LOG.info("UPDATE ORDER REQUEST : {} FINISHED", order.orderId());
         }
     }
 }

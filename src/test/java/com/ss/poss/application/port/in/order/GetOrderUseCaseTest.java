@@ -15,13 +15,13 @@ public class GetOrderUseCaseTest extends OrderUseCasesTest{
 
     @Test
     void  getOrder() {
-        given(orderPersistenceAdapter.getOrderById(order.getOrderId())).willReturn(Optional.of(order));
-        Order result = getOrderUseCase.getOrderById(order.getOrderId());
+        given(orderPersistenceAdapter.getOrderById(order.orderId())).willReturn(Optional.of(order));
+        Order result = getOrderUseCase.getOrderById(order.orderId());
         assertAll(()-> {
-            Mockito.verify(orderPersistenceAdapter, atMost(1)).getOrderById(order.getOrderId());
+            Mockito.verify(orderPersistenceAdapter, atMost(1)).getOrderById(order.orderId());
             assertNotNull(result);
             assertEquals(order, result);
-            assertEquals(order.getOrderId(), result.getOrderId());
+            assertEquals(order.orderId(), result.orderId());
         });
     }
 }
