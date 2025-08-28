@@ -13,5 +13,5 @@ public record User (
         String refreshToken
 ) implements Serializable {
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 249370645992282433L;
 }
