@@ -1,7 +1,9 @@
 package com.ss.poss.application.port.in.order;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.service.OrderService;
+import com.ss.poss.infrastructure.adapter.config.OrderWebSocketHandler;
 import com.ss.poss.infrastructure.adapter.out.persistence.order.OrderPersistenceAdapter;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,7 +17,9 @@ public class OrderUseCasesTest {
     protected static Order order;
     protected static List<Order> orders;
     protected final OrderPersistenceAdapter orderPersistenceAdapter = Mockito.mock(OrderPersistenceAdapter.class);
-    protected final OrderService orderService = new OrderService(orderPersistenceAdapter);
+    protected final OrderWebSocketHandler orderWebSocketHandler = Mockito.mock(OrderWebSocketHandler.class);
+    protected final ObjectMapper objectMapper = new ObjectMapper();
+    protected final OrderService orderService = new OrderService(orderPersistenceAdapter, orderWebSocketHandler, objectMapper);
 
     @BeforeAll
     static void setUp() {
