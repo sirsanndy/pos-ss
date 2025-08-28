@@ -1,15 +1,11 @@
 package com.ss.poss.domain.menu.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serial;
 import java.io.Serializable;
 
-@Getter
-@Setter
-public class MenuWebhook implements Serializable {
+public record MenuWebhook(
+        String event
+) implements Serializable {
     @Serial
-    private static final long serialVersionUID = 1L;
-    private String event;
+    private static final long serialVersionUID = -4949383417985968474L;
 }

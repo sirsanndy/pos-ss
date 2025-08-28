@@ -1,21 +1,15 @@
 package com.ss.poss.domain.menucategory.model;
 
-import lombok.*;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class MenuCategory implements Serializable {
+public record MenuCategory(
+        UUID menuCategoryId,
+        String menuCategoryName,
+        String menuCategoryDesc,
+        Boolean isActive
+) implements Serializable {
     @Serial
-    private static final long serialVersionUID = 1L;
-    private UUID menuCategoryId;
-    private String menuCategoryName;
-    private String menuCategoryDesc;
-    private Boolean isActive;
+    private static final long serialVersionUID = 4150276998337236924L;
 }

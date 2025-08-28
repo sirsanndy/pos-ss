@@ -1,25 +1,19 @@
 package com.ss.poss.domain.menu.model;
 
-import lombok.*;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Menu implements Serializable {
+public record Menu(
+        UUID menuId,
+        String name,
+        String description,
+        Integer stock,
+        BigDecimal price,
+        UUID menuCategoryId,
+        Boolean isActive
+) implements Serializable {
     @Serial
-    private static final long serialVersionUID = 1L;
-    private UUID menuId;
-    private String name;
-    private String description;
-    private Integer stock;
-    private BigDecimal price;
-    private UUID menuCategoryId;
-    private Boolean isActive;
+    static final long serialVersionUID = 4114873224866368052L;
 }

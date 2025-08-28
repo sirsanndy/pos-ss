@@ -1,18 +1,14 @@
 package com.ss.poss.domain.auth.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serial;
 import java.io.Serializable;
 
-@Getter
-@Setter
-public class SignupRequest implements Serializable {
+public record SignupRequest (
+        String username,
+        String password,
+        String email,
+        String phone
+) implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private String username;
-    private String password;
-    private String email;
-    private String phone;
 }
