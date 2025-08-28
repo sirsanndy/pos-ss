@@ -1,19 +1,13 @@
 package com.ss.poss.infrastructure.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "MENU")
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class MenuEntity extends BaseEntity {
     @Id
     @GeneratedValue(
@@ -45,4 +39,68 @@ public class MenuEntity extends BaseEntity {
     @OneToMany(mappedBy = "menu", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private List<OrderDetailEntity> listOrderDetail;
+
+    public UUID getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(UUID menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public MenuCategoryEntity getMenuCategory() {
+        return menuCategory;
+    }
+
+    public void setMenuCategory(MenuCategoryEntity menuCategory) {
+        this.menuCategory = menuCategory;
+    }
+
+    public List<OrderDetailEntity> getListOrderDetail() {
+        return listOrderDetail;
+    }
+
+    public void setListOrderDetail(List<OrderDetailEntity> listOrderDetail) {
+        this.listOrderDetail = listOrderDetail;
+    }
 }

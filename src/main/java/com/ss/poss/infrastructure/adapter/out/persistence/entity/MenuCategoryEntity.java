@@ -1,18 +1,12 @@
 package com.ss.poss.infrastructure.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "MENU_CATEGORY")
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class MenuCategoryEntity extends BaseEntity {
     @Id
     @GeneratedValue(
@@ -33,4 +27,44 @@ public class MenuCategoryEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "menuCategory", cascade = CascadeType.REMOVE)
     private List<MenuEntity> listMenu;
+
+    public UUID getMenuCategoryId() {
+        return menuCategoryId;
+    }
+
+    public void setMenuCategoryId(UUID menuCategoryId) {
+        this.menuCategoryId = menuCategoryId;
+    }
+
+    public String getMenuCategoryName() {
+        return menuCategoryName;
+    }
+
+    public void setMenuCategoryName(String menuCategoryName) {
+        this.menuCategoryName = menuCategoryName;
+    }
+
+    public String getMenuCategoryDesc() {
+        return menuCategoryDesc;
+    }
+
+    public void setMenuCategoryDesc(String menuCategoryDesc) {
+        this.menuCategoryDesc = menuCategoryDesc;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public List<MenuEntity> getListMenu() {
+        return listMenu;
+    }
+
+    public void setListMenu(List<MenuEntity> listMenu) {
+        this.listMenu = listMenu;
+    }
 }
