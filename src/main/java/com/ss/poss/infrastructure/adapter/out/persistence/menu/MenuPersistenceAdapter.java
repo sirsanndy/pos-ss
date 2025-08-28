@@ -32,20 +32,20 @@ public class MenuPersistenceAdapter implements MenuOutputPort {
     public Menu saveMenu(Menu menu) {
         LOG.info("SAVE MENU IN PERSISTENCE LAYER TO DB STARTED");
         MenuEntity menuEntity;
-        if (Objects.nonNull(menu.getMenuId())) {
-            menuEntity = menuRepository.findByMenuIdLocked(menu.getMenuId())
+        if (Objects.nonNull(menu.menuId())) {
+            menuEntity = menuRepository.findByMenuIdLocked(menu.menuId())
                     .orElse(new MenuEntity());
-            menuEntity.setDescription(menu.getDescription());
-            menuEntity.setName(menu.getName());
-            menuEntity.setStock(menu.getStock());
-            menuEntity.setPrice(menu.getPrice());
+            menuEntity.setDescription(menu.description());
+            menuEntity.setName(menu.name());
+            menuEntity.setStock(menu.stock());
+            menuEntity.setPrice(menu.price());
         } else {
             menuEntity = menuMapper.toEntity(menu);
         }
-        menuEntity = menuRepository.save(menuEntity);
-        menu.setMenuId(menuEntity.getMenuId());
+        menuRepository.save(menuEntity);
+
         LOG.info("SAVE MENU IN PERSISTENCE LAYER TO DB FINISHED");
-        return menu;
+        return menuMapper.toMenu(menuEntity);
     }
 
     @Override

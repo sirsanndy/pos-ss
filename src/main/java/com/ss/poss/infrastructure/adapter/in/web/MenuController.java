@@ -55,7 +55,7 @@ public class MenuController {
 
     @PostMapping("/create")
     public ResponseEntity<Menu> createMenu(@RequestBody Menu menu) {
-        LOG.info("CREATE MENU REQUEST : {} STARTED", menu.getMenuId());
+        LOG.info("CREATE MENU REQUEST : {} STARTED", menu.menuId());
         try {
             menu = createMenuUseCase.createMenu(menu);
             return ResponseEntity.ok(menu);
@@ -63,13 +63,13 @@ public class MenuController {
             LOG.error("CREATE WHEN UPDATE LIST OF MENU REQUEST : {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } finally {
-            LOG.info("CREATE MENU REQUEST : {} FINISHED", menu.getMenuId());
+            LOG.info("CREATE MENU REQUEST : {} FINISHED", menu.menuId());
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<Menu> updateMenu(@RequestBody Menu menu) {
-        LOG.info("UPDATE MENU REQUEST : {} STARTED", menu.getMenuId());
+        LOG.info("UPDATE MENU REQUEST : {} STARTED", menu.menuId());
         try {
             menu = createMenuUseCase.createMenu(menu);
             return ResponseEntity.ok(menu);
@@ -77,7 +77,7 @@ public class MenuController {
             LOG.error("ERROR WHEN UPDATE LIST OF MENU REQUEST : {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } finally {
-            LOG.info("UPDATE MENU REQUEST : {} FINISHED", menu.getMenuId());
+            LOG.info("UPDATE MENU REQUEST : {} FINISHED", menu.menuId());
         }
     }
 

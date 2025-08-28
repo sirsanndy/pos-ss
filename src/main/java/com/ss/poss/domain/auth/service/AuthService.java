@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,13 +36,25 @@ public class AuthService {
 
     public String authenticate(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
         String accessToken = jwtTokenProvider.generateAccessToken(authentication);
         String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
 
-        User user = userService.getUserByUsername(authRequest.getUsername());
-        user.setRefreshToken(refreshToken);
-        userService.createUser(user);
+        User user = userService.getUserByUsername(authRequest.username());
+        if (Objects.isNull(user)) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        user = new User(
+                user.userId(),
+                user.username(),
+                user.password(),
+                user.email(),
+                user.phone(),
+                refreshToken
+        );
+
+        userService.saveUser(user);
 
         return accessToken;
     }
@@ -53,25 +66,24 @@ public class AuthService {
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
             return jwtTokenProvider.generateAccessToken(authentication);
-        } else {
-            return "Invalid refresh token";
         }
+
+        return "Invalid refresh token";
     }
 
     public AuthRequest signup(SignupRequest signupRequest) {
-        User user = userService.getUserByUsername(signupRequest.getUsername());
-        if(Objects.isNull(user)) {
-            user = new User();
-            user.setUsername(signupRequest.getUsername());
-            user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-            user.setEmail(signupRequest.getEmail());
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(signupRequest.getUsername(), signupRequest.getPassword());
+        if(Objects.isNull(userService.getUserByUsername(signupRequest.username()))) {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(signupRequest.username(), signupRequest.password());
             AuthRequest authRequest = getAuthRequest(signupRequest, authentication);
-
-            user.setRefreshToken(authRequest.getRefreshToken());
-
-            userService.createUser(user);
+            User user = new User(
+                    null,
+                    signupRequest.username(),
+                    passwordEncoder.encode(signupRequest.password()),
+                    signupRequest.email(),
+                    signupRequest.phone(),
+                    authRequest.refreshToken()
+            );
+            userService.saveUser(user);
             return authRequest;
         } else {
             throw new RuntimeException("User already exists");
@@ -79,10 +91,11 @@ public class AuthService {
     }
 
     private AuthRequest getAuthRequest(SignupRequest signupRequest, Authentication authentication) {
-        AuthRequest authRequest = new AuthRequest();
-        authRequest.setUsername(signupRequest.getUsername());
-        authRequest.setRefreshToken(jwtTokenProvider.generateRefreshToken(authentication));
-        authRequest.setToken(jwtTokenProvider.generateAccessToken(authentication));
-        return authRequest;
+        return new AuthRequest(
+                signupRequest.username(),
+                passwordEncoder.encode(signupRequest.password()),
+                jwtTokenProvider.generateAccessToken(authentication),
+                jwtTokenProvider.generateRefreshToken(authentication)
+        );
     }
 }

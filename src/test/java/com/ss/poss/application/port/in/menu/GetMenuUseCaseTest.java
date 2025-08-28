@@ -11,13 +11,13 @@ public class GetMenuUseCaseTest extends MenuUseCasesTest {
 
     @Test
     void getMenu() {
-        Mockito.when(menuPersistenceAdapter.getMenuById(menu.getMenuId())).thenReturn(java.util.Optional.of(menu));
-        Menu result = getMenuUseCase.getMenuById(menu.getMenuId());
+        Mockito.when(menuPersistenceAdapter.getMenuById(menu.menuId())).thenReturn(java.util.Optional.of(menu));
+        Menu result = getMenuUseCase.getMenuById(menu.menuId());
         assertAll(()-> {
-            Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).getMenuById(menu.getMenuId());
+            Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).getMenuById(menu.menuId());
             assertNotNull(result);
             assertEquals(menu, result);
-            assertEquals(menu.getMenuId(), result.getMenuId());
+            assertEquals(menu.menuId(), result.menuId());
         });
     }
 }

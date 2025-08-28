@@ -14,7 +14,7 @@ public class GetMenuCategoryUseCaseTest extends MenuCategoryUseCasesTest {
 
     @Test
     public void getMenuCategory() {
-        UUID id = menuCategory.getMenuCategoryId();
+        UUID id = menuCategory.menuCategoryId();
         given(menuCategoryPersistenceAdapter.getMenuCategoryById(id)).willReturn(menuCategory);
         MenuCategory result = getMenuCategoryUseCase.getMenuCategoryById(id);
 
@@ -22,7 +22,7 @@ public class GetMenuCategoryUseCaseTest extends MenuCategoryUseCasesTest {
             Mockito.verify(menuCategoryPersistenceAdapter, Mockito.times(1)).getMenuCategoryById(id);
             assertNotNull(result);
             assertEquals(result, menuCategory);
-            assertEquals(result.getMenuCategoryId(), menuCategory.getMenuCategoryId());
+            assertEquals(result.menuCategoryId(), menuCategory.menuCategoryId());
         });
     }
 }

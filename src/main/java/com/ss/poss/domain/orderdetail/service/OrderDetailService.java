@@ -29,9 +29,9 @@ public class OrderDetailService implements CreateOrderDetailUseCase, GetOrderDet
 
     @Override
     public OrderDetail createOrderDetail(OrderDetail orderDetail) {
-        LOG.info("Create order detail: {} started", orderDetail.getOrderId());
+        LOG.info("Create order detail: {} started", orderDetail.orderId());
         orderDetailPersistenceAdapter.saveOrderDetail(orderDetail);
-        LOG.info("Create order detail: {} finished", orderDetail.getOrderId());
+        LOG.info("Create order detail: {} finished", orderDetail.orderId());
         return orderDetail;
     }
 

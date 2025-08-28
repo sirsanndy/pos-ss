@@ -21,7 +21,7 @@ class CreateMenuUseCaseTest extends MenuUseCasesTest {
             Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).saveMenu(menu);
             assertNotNull(result);
             assertEquals(menu, result);
-            assertEquals(menu.getMenuId(), result.getMenuId());
+            assertEquals(menu.menuId(), result.menuId());
         });
     }
 
@@ -34,7 +34,7 @@ class CreateMenuUseCaseTest extends MenuUseCasesTest {
             assertNotNull(result);
             assertFalse(result.isEmpty());
             for (Menu menuTest : result) {
-                assertNotNull(menuTest.getMenuId());
+                assertNotNull(menuTest.menuId());
                 assertTrue(menus.contains(menuTest));
             }
         });

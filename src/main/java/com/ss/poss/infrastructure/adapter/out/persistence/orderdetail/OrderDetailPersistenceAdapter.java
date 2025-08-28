@@ -64,15 +64,14 @@ public class OrderDetailPersistenceAdapter implements OrderDetailOutputPort {
     public List<OrderDetail> saveOrderDetails(Order order) {
         LOG.info("SAVE ORDER DETAIL IN PERSISTENCE LAYER FROM DB STARTED");
         List<OrderDetailEntity> orderDetailEntityList = order.getListItem().stream().map(obj -> {
-            obj.setOrderId(order.getOrderId());
-            Optional<OrderDetailEntity> existOrderDetail = orderDetailRepository.findByOrderIdAndMenuId(obj.getOrderId(), obj.getMenuId());
+            Optional<OrderDetailEntity> existOrderDetail = orderDetailRepository.findByOrderIdAndMenuId(order.getOrderId(), obj.menuId());
 
             OrderDetailEntity orderDetailEntity = orderDetailMapper.toEntity(obj);
-            MenuEntity menuEntity = menuRepository.findByMenuIdLocked(obj.getMenuId())
+            MenuEntity menuEntity = menuRepository.findByMenuIdLocked(obj.menuId())
                     .filter(menu -> menu.getStock() > 0)
-                    .orElseThrow(() -> new MenuNotFoundException(String.format("MENU WITH ID %s IS NOT FOUND OR STOCK IS EMPTY", obj.getMenuId())));
-            menuEntity.setStock(menuEntity.getStock() - (existOrderDetail.map(detailEntity -> obj.getQuantity() - detailEntity.getQuantity())
-                    .orElseGet(obj::getQuantity)));
+                    .orElseThrow(() -> new MenuNotFoundException(String.format("MENU WITH ID %s IS NOT FOUND OR STOCK IS EMPTY", obj.menuId())));
+            menuEntity.setStock(menuEntity.getStock() - (existOrderDetail.map(detailEntity -> obj.quantity() - detailEntity.getQuantity())
+                    .orElseGet(obj::quantity)));
             orderDetailEntity.setMenu(menuEntity);
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setOrderId(order.getOrderId());

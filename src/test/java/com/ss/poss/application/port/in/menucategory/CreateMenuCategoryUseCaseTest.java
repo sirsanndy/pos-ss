@@ -18,7 +18,7 @@ public class CreateMenuCategoryUseCaseTest extends MenuCategoryUseCasesTest {
             Mockito.verify(menuCategoryPersistenceAdapter, Mockito.times(1)).saveMenuCategory(menuCategory);
             assertNotNull(result);
             assertEquals(result, menuCategory);
-            assertEquals(result.getMenuCategoryId(), menuCategory.getMenuCategoryId());
+            assertEquals(result.menuCategoryId(), menuCategory.menuCategoryId());
         });
     }
 }

@@ -33,19 +33,18 @@ class MenuPersistenceAdapterTest {
         menu = Instancio.create(Menu.class);
         menuEntity = Instancio.create(MenuEntity.class);
         menuCategoryEntity = Instancio.create(MenuCategoryEntity.class);
-        menuCategoryEntity.setMenuCategoryId(menu.getMenuCategoryId());
+        menuCategoryEntity.setMenuCategoryId(menu.menuCategoryId());
     }
 
     @Test
     void saveMenu() {
-        menu.setMenuId(null);
         given(menuRepository.findByMenuIdLocked(any(UUID.class))).willReturn(Optional.of(menuEntity));
         given(menuRepository.save(any(MenuEntity.class))).willReturn(menuEntity);
         given(menuCategoryMapper.map(any(UUID.class))).willReturn(menuCategoryEntity);
         Menu objTest = menuPersistenceAdapter.saveMenu(menu);
         assertNotNull(objTest);
-        assertNotNull(objTest.getMenuId());
-        assertEquals(menuEntity.getMenuId(), objTest.getMenuId());
+        assertNotNull(objTest.menuId());
+        assertEquals(menuEntity.getMenuId(), objTest.menuId());
     }
 
     @Test
@@ -55,12 +54,12 @@ class MenuPersistenceAdapterTest {
     @Test
     void getMenuById() {
         given(menuRepository.findById(any(UUID.class))).willReturn(Optional.of(menuEntity));
-        Optional<Menu> objTest = menuPersistenceAdapter.getMenuById(menu.getMenuId());
+        Optional<Menu> objTest = menuPersistenceAdapter.getMenuById(menu.menuId());
         assertNotNull(objTest);
         assertTrue(objTest.isPresent());
         Menu objMenuTest = objTest.get();
-        assertNotNull(objMenuTest.getMenuId());
-        assertEquals(menuEntity.getMenuId(), objMenuTest.getMenuId());
+        assertNotNull(objMenuTest.menuId());
+        assertEquals(menuEntity.getMenuId(), objMenuTest.menuId());
     }
 
     @Test

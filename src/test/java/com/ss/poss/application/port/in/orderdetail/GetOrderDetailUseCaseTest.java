@@ -15,15 +15,15 @@ public class GetOrderDetailUseCaseTest extends OrderDetailUseCasesTest {
 
     @Test
     public void getOrderDetail() {
-        UUID orderId = orderDetail.getOrderId();
+        UUID orderId = orderDetail.orderId();
         given(orderDetailPersistenceAdapter.getOrderDetailById(orderId)).willReturn(Optional.of(orderDetail));
         OrderDetail result = getOrderDetailUseCase.getOrderDetailById(orderId);
         assertAll(()-> {
             Mockito.verify(orderDetailPersistenceAdapter).getOrderDetailById(orderId);
             assertNotNull(result);
-            assertNotNull(result.getOrderId());
-            assertEquals(orderDetail.getOrderId(), result.getOrderId());
-            assertEquals(orderDetail.getMenuId(), result.getMenuId());
+            assertNotNull(result.orderId());
+            assertEquals(orderDetail.orderId(), result.orderId());
+            assertEquals(orderDetail.menuId(), result.menuId());
         });
     }
 }

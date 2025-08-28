@@ -27,11 +27,15 @@ public class MenuCategoryPersistenceAdapter implements MenuCategoryOutputPort {
     @Override
     @Transactional(rollbackOn = {Exception.class, RuntimeException.class})
     public MenuCategory saveMenuCategory(MenuCategory menuCategory) {
-        LOG.info("Save menu category: {} started", menuCategory.getMenuCategoryId());
+        if(menuCategory.menuCategoryId() == null) {
+            LOG.info("Save new menu category started");
+        } else {
+            LOG.info("Save menu category: {} started", menuCategory.menuCategoryId());
+        }
         MenuCategoryEntity menuCategoryEntity = menuCategoryMapper.toMenuCategoryEntity(menuCategory);
         menuCategoryRepository.save(menuCategoryEntity);
-        menuCategory.setMenuCategoryId(menuCategoryEntity.getMenuCategoryId());
-        LOG.info("Save menu category: {} finished", menuCategory.getMenuCategoryId());
+        menuCategory = menuCategoryMapper.toMenuCategory(menuCategoryEntity);
+        LOG.info("Save menu category: {} finished", menuCategory.menuCategoryId());
         return menuCategory;
     }
 

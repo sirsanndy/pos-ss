@@ -23,8 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(userMapper::toUser)
                 .orElseThrow(() -> new UsernameNotFoundException("Unknown user" + username));
 
-        return User.withUsername(user.getUsername())
-                .password(user.getPassword())
+        return User.withUsername(user.username())
+                .password(user.password())
                 .authorities("ROLE_USER")
                 .accountExpired(false)
                 .accountLocked(false)

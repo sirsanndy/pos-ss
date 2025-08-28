@@ -22,7 +22,7 @@ public class UserService implements CreateUserUseCase, GetUserUseCase, GetListUs
     }
 
     @Override
-    public User createUser(User user) {
+    public User saveUser(User user) {
         LOG.info("Create user: {} service", user);
         return userPersistenceAdapter.saveUser(user);
     }
