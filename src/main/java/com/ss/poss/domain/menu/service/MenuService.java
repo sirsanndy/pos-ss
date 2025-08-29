@@ -4,6 +4,7 @@ import com.ss.poss.application.port.in.menu.CreateMenuUseCase;
 import com.ss.poss.application.port.in.menu.GetListMenuUseCase;
 import com.ss.poss.application.port.in.menu.GetMenuUseCase;
 import com.ss.poss.application.port.in.menu.WebhookMenuUseCase;
+import com.ss.poss.application.port.in.menucategory.GetMenuCategoryUseCase;
 import com.ss.poss.domain.menu.model.Menu;
 import com.ss.poss.domain.menu.model.MenuWebhook;
 import com.ss.poss.infrastructure.adapter.out.persistence.menu.MenuPersistenceAdapter;
@@ -12,20 +13,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMenuUseCase, WebhookMenuUseCase {
     private static final Logger LOG = LoggerFactory.getLogger(MenuService.class);
     private final MenuPersistenceAdapter menuPersistenceAdapter;
+    private final GetMenuCategoryUseCase getMenuCategoryUseCase;
 
-    public MenuService(MenuPersistenceAdapter menuPersistenceAdapter) {
+    public MenuService(MenuPersistenceAdapter menuPersistenceAdapter, GetMenuCategoryUseCase getMenuCategoryUseCase) {
         this.menuPersistenceAdapter = menuPersistenceAdapter;
+        this.getMenuCategoryUseCase = getMenuCategoryUseCase;
     }
 
     @Override
     public Menu createMenu(Menu menu) {
         LOG.info("Create or Update menu: {} started", menu.menuId());
+        if(Objects.isNull(getMenuCategoryUseCase.getMenuCategoryById(menu.menuCategoryId()))){
+            throw new IllegalArgumentException("Menu Category with ID " + menu.menuCategoryId() + " does not exist.");
+        }
+
         menu = menuPersistenceAdapter.saveMenu(menu);
         LOG.info("Create or Update menu: {} finished", menu.menuId());
         return menu;
