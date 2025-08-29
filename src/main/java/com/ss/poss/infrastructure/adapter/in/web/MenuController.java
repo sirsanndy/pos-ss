@@ -54,42 +54,42 @@ public class MenuController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Menu> createMenu(@RequestBody Menu menu) {
+    public ResponseEntity<Object> createMenu(@RequestBody Menu menu) {
         LOG.info("CREATE MENU REQUEST : {} STARTED", menu.menuId());
         try {
             menu = createMenuUseCase.createMenu(menu);
             return ResponseEntity.ok(menu);
         } catch (Exception e) {
             LOG.error("CREATE WHEN UPDATE LIST OF MENU REQUEST : {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         } finally {
             LOG.info("CREATE MENU REQUEST : {} FINISHED", menu.menuId());
         }
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Menu> updateMenu(@RequestBody Menu menu) {
+    public ResponseEntity<Object> updateMenu(@RequestBody Menu menu) {
         LOG.info("UPDATE MENU REQUEST : {} STARTED", menu.menuId());
         try {
             menu = createMenuUseCase.createMenu(menu);
             return ResponseEntity.ok(menu);
         } catch (Exception e) {
             LOG.error("ERROR WHEN UPDATE LIST OF MENU REQUEST : {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         } finally {
             LOG.info("UPDATE MENU REQUEST : {} FINISHED", menu.menuId());
         }
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<MenuWebhook> webhookMenus(@RequestBody MenuWebhook menuWebhook) {
+    public ResponseEntity<Object> webhookMenus(@RequestBody MenuWebhook menuWebhook) {
         LOG.info("WEBHOOK MENU REQUEST : {} STARTED", menuWebhook);
         try {
             webhookMenuUseCase.send(menuWebhook);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             LOG.error("ERROR WHEN WEBHOOK MENU REQUEST : {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         } finally {
             LOG.info("WEBHOOK MENU REQUEST : {} FINISHED", menuWebhook);
         }
