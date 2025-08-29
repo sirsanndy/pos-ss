@@ -1,4 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

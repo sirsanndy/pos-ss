@@ -1,5 +1,6 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.websocket;
 
+import com.ss.poss.infrastructure.adapter.config.auth.JwtHandshakeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
