@@ -29,9 +29,8 @@ public class JwtTokenProvider {
     private long REFRESH_EXPIRATION;
 
     public String generateAccessToken(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
-                .subject(userDetails.getUsername())
+                .subject(getUsernameFromAuthentication(authentication))
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + EXPIRATION))
                 .signWith(getSigningKey())
@@ -39,7 +38,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        var bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
@@ -52,9 +51,8 @@ public class JwtTokenProvider {
     }
 
     public String generateRefreshToken(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
-                .subject(userDetails.getUsername())
+                .subject(getUsernameFromAuthentication(authentication))
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + REFRESH_EXPIRATION))
                 .signWith(getSigningKey())
@@ -63,7 +61,7 @@ public class JwtTokenProvider {
 
     public String getUsernameFromToken(String token) {
         LOG.info("CREATE USERNAME FROM TOKEN: {}", token);
-        String username = "";
+        var username = "";
         try {
             username = Jwts.parser()
                     .verifyWith(getSigningKey())
@@ -85,5 +83,15 @@ public class JwtTokenProvider {
             LOG.error("ERROR WHEN INVALID TOKEN: {}", token, e);
             return false;
         }
+    }
+
+    private String getUsernameFromAuthentication(Authentication authentication) {
+        var username = "";
+        if (authentication.getPrincipal() instanceof UserDetails user) {
+            username = user.getUsername();
+        } else if (authentication.getPrincipal() instanceof String) {
+            username = (String) authentication.getPrincipal();
+        }
+        return username;
     }
 }
