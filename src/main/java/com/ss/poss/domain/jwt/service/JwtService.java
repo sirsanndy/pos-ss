@@ -3,7 +3,7 @@ package com.ss.poss.domain.jwt.service;
 import com.ss.poss.application.port.in.jwt.GetJwtUseCase;
 import com.ss.poss.application.port.in.jwt.GetUsernameUseCase;
 import com.ss.poss.application.port.in.jwt.ValidateJwtUseCase;
-import com.ss.poss.infrastructure.adapter.config.JwtTokenProvider;
+import com.ss.poss.infrastructure.adapter.config.auth.JwtTokenProvider;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;

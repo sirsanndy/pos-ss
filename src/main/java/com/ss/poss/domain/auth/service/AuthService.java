@@ -4,7 +4,7 @@ import com.ss.poss.domain.auth.model.AuthRequest;
 import com.ss.poss.domain.auth.model.SignupRequest;
 import com.ss.poss.domain.user.model.User;
 import com.ss.poss.domain.user.service.UserService;
-import com.ss.poss.infrastructure.adapter.config.JwtTokenProvider;
+import com.ss.poss.infrastructure.adapter.config.auth.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

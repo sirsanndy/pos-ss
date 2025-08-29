@@ -5,7 +5,7 @@ import com.ss.poss.application.port.in.order.*;
 import com.ss.poss.domain.order.exception.OrderNotFoundException;
 import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.model.OrderWebhook;
-import com.ss.poss.infrastructure.adapter.config.OrderWebSocketHandler;
+import com.ss.poss.infrastructure.adapter.config.websocket.OrderWebSocketHandler;
 import com.ss.poss.infrastructure.adapter.out.persistence.order.OrderPersistenceAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

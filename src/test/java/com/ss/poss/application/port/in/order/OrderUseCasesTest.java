@@ -3,7 +3,7 @@ package com.ss.poss.application.port.in.order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.service.OrderService;
-import com.ss.poss.infrastructure.adapter.config.OrderWebSocketHandler;
+import com.ss.poss.infrastructure.adapter.config.websocket.OrderWebSocketHandler;
 import com.ss.poss.infrastructure.adapter.out.persistence.order.OrderPersistenceAdapter;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeAll;
