@@ -1,4 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.auth;
 
 import com.ss.poss.domain.jwt.service.JwtService;
 import jakarta.servlet.FilterChain;

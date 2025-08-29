@@ -1,4 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
