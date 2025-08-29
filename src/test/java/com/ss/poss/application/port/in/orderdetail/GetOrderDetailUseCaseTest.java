@@ -1,6 +1,5 @@
 package com.ss.poss.application.port.in.orderdetail;
 
-import com.ss.poss.domain.orderdetail.model.OrderDetail;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -17,7 +16,7 @@ public class GetOrderDetailUseCaseTest extends OrderDetailUseCasesTest {
     public void getOrderDetail() {
         UUID orderId = orderDetail.orderId();
         given(orderDetailPersistenceAdapter.getOrderDetailById(orderId)).willReturn(Optional.of(orderDetail));
-        OrderDetail result = getOrderDetailUseCase.getOrderDetailById(orderId);
+        var result = getOrderDetailUseCase.getOrderDetailById(orderId);
         assertAll(()-> {
             Mockito.verify(orderDetailPersistenceAdapter).getOrderDetailById(orderId);
             assertNotNull(result);

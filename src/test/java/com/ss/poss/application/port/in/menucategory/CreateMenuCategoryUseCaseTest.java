@@ -1,6 +1,5 @@
 package com.ss.poss.application.port.in.menucategory;
 
-import com.ss.poss.domain.menucategory.model.MenuCategory;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -13,7 +12,7 @@ public class CreateMenuCategoryUseCaseTest extends MenuCategoryUseCasesTest {
     @Test
     public void createMenuCategory() {
         given(menuCategoryPersistenceAdapter.saveMenuCategory(menuCategory)).willReturn(menuCategory);
-        MenuCategory result = createMenuCategoryUseCase.createMenuCategory(menuCategory);
+        var result = createMenuCategoryUseCase.createMenuCategory(menuCategory);
         assertAll(()-> {
             Mockito.verify(menuCategoryPersistenceAdapter, Mockito.times(1)).saveMenuCategory(menuCategory);
             assertNotNull(result);

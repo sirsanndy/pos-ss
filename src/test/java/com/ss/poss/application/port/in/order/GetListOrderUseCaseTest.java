@@ -4,8 +4,6 @@ import com.ss.poss.domain.order.model.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
@@ -15,7 +13,7 @@ public class GetListOrderUseCaseTest extends OrderUseCasesTest {
      @Test
      void getListOrder() {
          given(orderPersistenceAdapter.getAllOrders()).willReturn(orders);
-         List<Order> result = getListOrderUseCase.getAllOrder();
+         var result = getListOrderUseCase.getAllOrder();
          assertAll(()-> {
              assertNotNull(result);
              assertFalse(result.isEmpty());

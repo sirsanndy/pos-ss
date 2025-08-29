@@ -3,7 +3,6 @@ package com.ss.poss.application.port.in.menu;
 import com.ss.poss.domain.menu.model.Menu;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ class CreateMenuUseCaseTest extends MenuUseCasesTest {
     @Test
     void createMenu() {
         given(menuPersistenceAdapter.saveMenu(menu)).willReturn(menu);
-        Menu result = createMenuUseCase.createMenu(menu);
+        var result = createMenuUseCase.createMenu(menu);
         assertAll(()->{
             Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).saveMenu(menu);
             assertNotNull(result);

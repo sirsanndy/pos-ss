@@ -1,6 +1,5 @@
 package com.ss.poss.application.port.in.order;
 
-import com.ss.poss.domain.order.model.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -17,7 +16,7 @@ public class CreateOrderUseCaseTest extends OrderUseCasesTest{
     public void createOrder() throws IOException {
         given(orderPersistenceAdapter.saveOrder(order)).willReturn(order);
         doNothing().when(orderWebSocketHandler).broadcastOrder(Mockito.anyString());
-        Order result = createOrderUseCase.createOrder(order);
+        var result = createOrderUseCase.createOrder(order);
         assertAll(()-> {
             Mockito.verify(orderPersistenceAdapter, Mockito.times(1)).saveOrder(order);
             Mockito.verify(orderWebSocketHandler, Mockito.times(1)).broadcastOrder(Mockito.anyString());

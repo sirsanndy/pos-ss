@@ -1,6 +1,5 @@
 package com.ss.poss.application.port.in.menu;
 
-import com.ss.poss.domain.menu.model.Menu;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -12,7 +11,7 @@ public class GetMenuUseCaseTest extends MenuUseCasesTest {
     @Test
     void getMenu() {
         Mockito.when(menuPersistenceAdapter.getMenuById(menu.menuId())).thenReturn(java.util.Optional.of(menu));
-        Menu result = getMenuUseCase.getMenuById(menu.menuId());
+        var result = getMenuUseCase.getMenuById(menu.menuId());
         assertAll(()-> {
             Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).getMenuById(menu.menuId());
             assertNotNull(result);

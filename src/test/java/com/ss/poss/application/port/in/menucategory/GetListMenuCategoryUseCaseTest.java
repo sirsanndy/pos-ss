@@ -4,8 +4,6 @@ import com.ss.poss.domain.menucategory.model.MenuCategory;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
@@ -15,7 +13,7 @@ public class GetListMenuCategoryUseCaseTest extends MenuCategoryUseCasesTest {
     @Test
     public void getListMenuCategory() {
         given(menuCategoryPersistenceAdapter.getMenuCategories()).willReturn(menuCategoryList);
-        List<MenuCategory> result = getListMenuCategoryUseCase.getListMenuCategory();
+        var result = getListMenuCategoryUseCase.getListMenuCategory();
         assertAll(()-> {
             Mockito.verify(menuCategoryPersistenceAdapter, Mockito.times(1)).getMenuCategories();
             assertNotNull(result);

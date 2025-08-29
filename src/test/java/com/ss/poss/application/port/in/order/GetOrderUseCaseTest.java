@@ -1,6 +1,5 @@
 package com.ss.poss.application.port.in.order;
 
-import com.ss.poss.domain.order.model.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -16,7 +15,7 @@ public class GetOrderUseCaseTest extends OrderUseCasesTest{
     @Test
     void  getOrder() {
         given(orderPersistenceAdapter.getOrderById(order.orderId())).willReturn(Optional.of(order));
-        Order result = getOrderUseCase.getOrderById(order.orderId());
+        var result = getOrderUseCase.getOrderById(order.orderId());
         assertAll(()-> {
             Mockito.verify(orderPersistenceAdapter, atMost(1)).getOrderById(order.orderId());
             assertNotNull(result);
