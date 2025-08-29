@@ -1,4 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.db;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -3,7 +3,7 @@ package com.ss.poss.infrastructure.adapter.out.persistence.user;
 import com.ss.poss.application.port.out.user.UserOutputPort;
 import com.ss.poss.domain.user.mapper.UserMapper;
 import com.ss.poss.domain.user.model.User;
-import com.ss.poss.infrastructure.adapter.config.PersistenceAdapter;
+import com.ss.poss.infrastructure.adapter.config.db.PersistenceAdapter;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

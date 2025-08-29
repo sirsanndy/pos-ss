@@ -3,7 +3,7 @@ package com.ss.poss.infrastructure.adapter.out.persistence.menucategory;
 import com.ss.poss.application.port.out.menucategory.MenuCategoryOutputPort;
 import com.ss.poss.domain.menucategory.mapper.MenuCategoryMapper;
 import com.ss.poss.domain.menucategory.model.MenuCategory;
-import com.ss.poss.infrastructure.adapter.config.PersistenceAdapter;
+import com.ss.poss.infrastructure.adapter.config.db.PersistenceAdapter;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuCategoryEntity;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;

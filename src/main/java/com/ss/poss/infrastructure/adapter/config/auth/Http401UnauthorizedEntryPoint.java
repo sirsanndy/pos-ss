@@ -1,5 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
-
+package com.ss.poss.infrastructure.adapter.config.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -10,27 +9,30 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.Instant;
 
+
 @Component
-public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
+public class Http401UnauthorizedEntryPoint implements AuthenticationEntryPoint {
+    private static final Logger LOG = LoggerFactory.getLogger(Http401UnauthorizedEntryPoint.class);
+
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        LOG.error("Access denied error: {}", accessDeniedException.getMessage());
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+            throws IOException {
+        LOG.error("Unauthorized error: {}", authException.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         ErrorResponse body = new ErrorResponse(
-                HttpServletResponse.SC_FORBIDDEN,
-                "Forbidden",
+                HttpServletResponse.SC_UNAUTHORIZED,
+                "Unauthorized",
                 Instant.now(),
-                accessDeniedException.getMessage(),
+                authException.getMessage(),
                 request.getServletPath());
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

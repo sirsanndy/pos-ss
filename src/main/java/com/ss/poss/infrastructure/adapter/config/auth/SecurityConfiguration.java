@@ -1,7 +1,6 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.auth;
 
 import com.ss.poss.domain.user.service.UserDetailsServiceImpl;
-import com.ss.poss.infrastructure.adapter.config.auth.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

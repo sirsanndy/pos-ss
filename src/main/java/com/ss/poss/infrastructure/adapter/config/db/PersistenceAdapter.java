@@ -1,4 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.db;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
