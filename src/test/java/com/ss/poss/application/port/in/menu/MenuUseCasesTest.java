@@ -1,5 +1,6 @@
 package com.ss.poss.application.port.in.menu;
 
+import com.ss.poss.application.port.in.menucategory.GetMenuCategoryUseCase;
 import com.ss.poss.domain.menu.model.Menu;
 import com.ss.poss.domain.menu.model.MenuWebhook;
 import com.ss.poss.domain.menu.service.MenuService;
@@ -16,7 +17,8 @@ public class MenuUseCasesTest {
     protected static Menu menu;
     protected static List<Menu> menus;
     protected final MenuPersistenceAdapter menuPersistenceAdapter = Mockito.mock(MenuPersistenceAdapter.class);
-    protected final MenuService menuService = new MenuService(menuPersistenceAdapter);
+    protected final GetMenuCategoryUseCase getMenuCategoryUseCase = Mockito.mock(GetMenuCategoryUseCase.class);
+    protected final MenuService menuService = new MenuService(menuPersistenceAdapter, getMenuCategoryUseCase);
     protected static MenuWebhook menuWebhook;
 
     @BeforeAll

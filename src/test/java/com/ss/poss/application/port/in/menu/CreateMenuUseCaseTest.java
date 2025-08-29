@@ -1,6 +1,8 @@
 package com.ss.poss.application.port.in.menu;
 
 import com.ss.poss.domain.menu.model.Menu;
+import com.ss.poss.domain.menucategory.model.MenuCategory;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -14,10 +16,13 @@ class CreateMenuUseCaseTest extends MenuUseCasesTest {
 
     @Test
     void createMenu() {
+        final var menuCategory = Instancio.create(MenuCategory.class);
+        given(getMenuCategoryUseCase.getMenuCategoryById(menu.menuCategoryId())).willReturn(menuCategory);
         given(menuPersistenceAdapter.saveMenu(menu)).willReturn(menu);
         var result = createMenuUseCase.createMenu(menu);
         assertAll(()->{
             Mockito.verify(menuPersistenceAdapter, Mockito.times(1)).saveMenu(menu);
+            Mockito.verify(getMenuCategoryUseCase, Mockito.times(1)).getMenuCategoryById(menu.menuCategoryId());
             assertNotNull(result);
             assertEquals(menu, result);
             assertEquals(menu.menuId(), result.menuId());
