@@ -1,4 +1,4 @@
-package com.ss.poss.infrastructure.adapter.config;
+package com.ss.poss.infrastructure.adapter.config.auth;
 
 import com.ss.poss.domain.jwt.exception.TokenException;
 import com.ss.poss.domain.jwt.handler.ErrorResponse;
