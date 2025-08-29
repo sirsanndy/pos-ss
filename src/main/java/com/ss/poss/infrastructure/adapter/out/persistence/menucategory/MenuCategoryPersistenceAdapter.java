@@ -52,7 +52,8 @@ public class MenuCategoryPersistenceAdapter implements MenuCategoryOutputPort {
     @Override
     public MenuCategory getMenuCategoryById(UUID menuCategoryId) {
         LOG.info("Get menu category: {} started", menuCategoryId);
-        MenuCategory menuCategory = menuCategoryRepository.findById(menuCategoryId).map(menuCategoryMapper::toMenuCategory)
+        MenuCategory menuCategory = menuCategoryRepository.findById(menuCategoryId)
+                .map(menuCategoryMapper::toMenuCategory)
                 .orElse(null);
         LOG.info("Get menu category: {} finished", menuCategoryId);
         return menuCategory;
