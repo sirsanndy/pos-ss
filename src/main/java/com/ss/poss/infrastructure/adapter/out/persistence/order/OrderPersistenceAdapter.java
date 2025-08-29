@@ -7,7 +7,7 @@ import com.ss.poss.domain.order.model.Order;
 import com.ss.poss.domain.order.model.OrderStatus;
 import com.ss.poss.domain.orderdetail.model.OrderDetail;
 import com.ss.poss.domain.orderdetail.service.OrderDetailService;
-import com.ss.poss.infrastructure.adapter.config.Adapter;
+import com.ss.poss.infrastructure.adapter.config.PersistenceAdapter;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.OrderEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Adapter
+@PersistenceAdapter
 public class OrderPersistenceAdapter implements OrderOutputPort {
     private static final Logger LOG = LoggerFactory.getLogger(OrderPersistenceAdapter.class);
 

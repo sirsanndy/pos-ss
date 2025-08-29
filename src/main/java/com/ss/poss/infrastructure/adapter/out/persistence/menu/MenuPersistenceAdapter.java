@@ -3,7 +3,7 @@ package com.ss.poss.infrastructure.adapter.out.persistence.menu;
 import com.ss.poss.application.port.out.menu.MenuOutputPort;
 import com.ss.poss.domain.menu.mapper.MenuMapper;
 import com.ss.poss.domain.menu.model.Menu;
-import com.ss.poss.infrastructure.adapter.config.Adapter;
+import com.ss.poss.infrastructure.adapter.config.PersistenceAdapter;
 import com.ss.poss.infrastructure.adapter.out.persistence.entity.MenuEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@Adapter
+@PersistenceAdapter
 @Transactional(readOnly = true)
 public class MenuPersistenceAdapter implements MenuOutputPort {
     private static final Logger LOG = LoggerFactory.getLogger(MenuPersistenceAdapter.class);
