@@ -21,7 +21,8 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
     }
 
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                                   WebSocketHandler wsHandler, Map<String, Object> attributes) {
         HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
         String token = servletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         if (token != null && token.startsWith("Bearer ")) {
@@ -36,7 +37,8 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
     }
 
     @Override
-    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                               WebSocketHandler wsHandler, Exception exception) {
     }
 
     private boolean validateToken(String token) {
