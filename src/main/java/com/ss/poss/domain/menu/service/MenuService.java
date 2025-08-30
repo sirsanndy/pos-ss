@@ -32,7 +32,7 @@ public class MenuService implements CreateMenuUseCase, GetListMenuUseCase, GetMe
     public Menu createMenu(Menu menu) {
         LOG.info("Create or Update menu: {} started", menu.menuId());
         var menuCategoryId = menu.menuCategoryId();
-        Optional.ofNullable(getMenuCategoryUseCase.getMenuCategoryById(menu.menuId()))
+        Optional.ofNullable(getMenuCategoryUseCase.getMenuCategoryById(menu.menuCategoryId()))
                 .orElseThrow(() -> new MenuCategoryNotFoundException(String.format("Menu Category with ID %s does not exist.", menuCategoryId)));
 
         menu = menuPersistenceAdapter.saveMenu(menu);
